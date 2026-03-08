@@ -1,0 +1,58 @@
+﻿
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\components\builder\FieldComponent.tsx
+  121:9  error  Unexpected lexical declaration in case block  no-case-declarations
+  122:9  error  Unexpected lexical declaration in case block  no-case-declarations
+  123:9  error  Unexpected lexical declaration in case block  no-case-declarations
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\components\builder\FieldSettingsPanel.tsx
+  121:6   warning  React Hook useEffect has missing dependencies: 'field?.helpText' and 'field?.label'. Either include them or remove the dependency array. If 'setPendingLabel' needs the current value of 'field.label', you can also switch to useReducer instead of useState and read 'field.label' in the reducer  react-hooks/exhaustive-deps
+  208:65  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\components\builder\SubformCanvas.tsx
+  19:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\components\dashboard\FormCard.tsx
+  254:9  error  'handleSwitchType' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\lib\api.ts
+  15:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  17:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  23:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\pages\FormRenderer.tsx
+    3:10  error  'Form' is defined but never used          @typescript-eslint/no-unused-vars
+    3:16  error  'FormField' is defined but never used     @typescript-eslint/no-unused-vars
+    3:36  error  'FieldType' is defined but never used     @typescript-eslint/no-unused-vars
+   10:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   10:68  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   11:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   42:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   60:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   75:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  151:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\store\useFormStore.ts
+  17:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  17:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 41 problems (40 errors, 1 warning)
+

@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+// ─── User ────────────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  forms     Form[]
+  folders   Folder[]
+}
+
+// ─── Form ────────────────────────────────────────────────
+model Form {
+  id            String       @id @default(cuid())
+  name          String
+  type          String       @default("standard")
+  isDeleted     Boolean      @default(false)
+  isDisabled    Boolean      @default(false)
+  submissions   Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  settings      Json?
+  theme         Json?
+  rules         Json?
+  welcomePage   Json?
+
+  ownerId       String?
+  owner         User?        @relation(fields: [ownerId], references: [id])
+  folderId      String?
+  folder        Folder?      @relation(fields: [folderId], references: [id])
+  
+  fields        FormField[]
+  gridRows      GridRow[]
+  formSubmissions Submission[]
+}
+
+// ─── FormField ───────────────────────────────────────────
+model FormField {
+  id          String      @id @default(cuid())
+  type        String
+  label       String
+  placeholder String?
+  helpText    String?
+  required    Boolean     @default(false)
+  options     Json?
+  position    Int         @default(0)
+  subFields   Json?
+
+  formId      String
+  form        Form        @relation(fields: [formId], references: [id], onDelete: Cascade)
+  gridSlotId  String?
+}
+
+// ─── GridRow ─────────────────────────────────────────────
+model GridRow {
+  id       String @id @default(cuid())
+  columns  Int    @default(1)
+  slots    Json
+
+  formId   String
+  form     Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
+}
+
+// ─── Submission ──────────────────────────────────────────
+model Submission {
+  id          String   @id @default(cuid())
+  formId      String
+  form        Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  submittedAt DateTime @default(now())
+  data        Json
+}
+
+// ─── Folder ──────────────────────────────────────────────
+model Folder {
+  id          String   @id @default(cuid())
+  name        String
+  color       String   @default("#14b8a6")
+  isShared    Boolean  @default(false)
+  sharedWith  Json?
+  createdAt   DateTime @default(now())
+
+  ownerId     String?
+  owner       User?    @relation(fields: [ownerId], references: [id])
+  forms       Form[]
+}

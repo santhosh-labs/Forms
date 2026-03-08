@@ -1,0 +1,296 @@
+/* ── Google Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens: Light Mode ────────────────────────────────── */
+:root {
+  --background: 210 17% 96%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --card-border: 214 32% 91%;
+  --primary: 217 91% 45%;
+  --primary-foreground: 0 0% 100%;
+  --primary-border: 217 91% 40%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 20%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 20% 45%;
+  --accent: 172 60% 90%;
+  --accent-foreground: 172 60% 22%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 86%;
+  --input: 214 32% 91%;
+  --ring: 217 91% 45%;
+  --radius: 0.75rem;
+
+  /* Sidebar */
+  --sidebar-background: 222 47% 11%;
+  --sidebar-foreground: 210 40% 92%;
+  --sidebar-primary: 217 91% 65%;
+  --sidebar-accent: 222 47% 18%;
+  --sidebar-accent-foreground: 210 40% 96%;
+  --sidebar-border: 222 47% 16%;
+}
+
+/* ── Design Tokens: Dark Mode ─────────────────────────────────── */
+.dark {
+  --background: 222 47% 9%;
+  --foreground: 210 40% 95%;
+  --card: 222 47% 12%;
+  --card-foreground: 210 40% 95%;
+  --primary: 217 91% 62%;
+  --secondary: 222 47% 18%;
+  --muted: 222 47% 15%;
+  --muted-foreground: 215 20% 60%;
+  --border: 222 47% 20%;
+  --sidebar-background: 222 47% 7%;
+  --sidebar-primary: 217 91% 62%;
+  --sidebar-accent: 222 47% 14%;
+  --sidebar-border: 222 47% 14%;
+}
+
+/* ── Base Reset ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.4);
+}
+
+/* ── Focus Styles ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Smooth transitions on interactive elements ───────────────── */
+button,
+a,
+input,
+select,
+textarea {
+  transition-property: background-color, border-color, box-shadow, opacity, color, transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+/* ── Contenteditable placeholder ──────────────────────────────── */
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+}
+
+/* ── Animate-in (dropdowns, modals, popovers) ─────────────────── */
+.animate-in {
+  animation: animate-in 0.25s ease-out;
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Gradient shift animation ─────────────────────────────────── */
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* ── Fade in up (legacy) ──────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 200ms ease both;
+}
+
+/* ── Slide in for modals ──────────────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Drag preview ─────────────────────────────────────────────── */
+.drag-preview {
+  backdrop-filter: blur(4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Primary Button ───────────────────────────────────────────── */
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: background-color 150ms, box-shadow 150ms;
+}
+
+.btn-primary:hover {
+  background: hsl(var(--primary) / 0.9);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.3);
+  outline: none;
+}
+
+/* ── Status Badges ────────────────────────────────────────────── */
+.badge-published {
+  background: rgb(16 185 129 / 0.15);
+  color: rgb(16 185 129);
+  border: 1px solid rgb(16 185 129 / 0.3);
+}
+
+.badge-draft {
+  background: hsl(var(--primary) / 0.15);
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary) / 0.3);
+}
+
+.badge-disabled {
+  background: hsl(var(--destructive) / 0.15);
+  color: hsl(var(--destructive));
+  border: 1px solid hsl(var(--destructive) / 0.3);
+}
+
+/* ── Sidebar Active item (CSS class approach) ─────────────────── */
+.sidebar-active {
+  background: hsl(var(--primary));
+  color: white;
+}
+
+.sidebar-active svg {
+  color: white;
+}
+
+/* ── Sidebar nav glow on hover ────────────────────────────────── */
+.sidebar-nav-item:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ── Topbar pill buttons ──────────────────────────────────────── */
+.topbar-pill {
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+
+/* ── Live badge pulse ─────────────────────────────────────────── */
+@keyframes live-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-live-pulse {
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+/* ── Topbar glassmorphism ─────────────────────────────────────── */
+.topbar-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
