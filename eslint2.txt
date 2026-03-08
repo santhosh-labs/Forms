@@ -1,8 +1,0 @@
-﻿
-C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\src\pages\FormBuilder.tsx
-  48:3  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
-  59:6  warning  React Hook useEffect has missing dependencies: 'form' and 'location.state'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
-
-Γ£û 2 problems (0 errors, 2 warnings)
-  0 errors and 1 warning potentially fixable with the `--fix` option.
-
