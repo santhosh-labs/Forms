@@ -382,57 +382,59 @@ export default function FormBuilder() {
         </div>
       </div>
 
-      {/* ── ROW 2: Dark tab bar ───────────────────────── */}
+      {/* ── ROW 2: Light tab bar ───────────────────────── */}
       <div
-        className="shrink-0 flex items-stretch"
+        className="shrink-0 flex items-stretch relative"
         style={{
-          height: 44,
-          background: '#1e2432',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          height: 48,
+          background: '#ffffff',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+          borderBottom: '1px solid #e2e8f0',
+          zIndex: 10,
         }}
       >
         {/* Home icon */}
         <button
           onClick={() => navigate('/')}
           className="flex items-center justify-center px-4 transition-colors"
-          style={{ color: 'rgba(255,255,255,0.6)' }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#fff'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.6)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+          style={{ color: '#94a3b8' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#334155'; (e.currentTarget as HTMLElement).style.background = '#f8fafc'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#94a3b8'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
         >
-          <Home size={15} />
+          <Home size={16} />
         </button>
 
         {/* Divider */}
-        <div className="w-px h-full" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        <div className="w-px h-full" style={{ background: '#e2e8f0' }} />
 
         {/* Tabs */}
-        <nav className="flex items-stretch flex-1 overflow-x-auto no-scrollbar">
+        <nav className="flex items-stretch flex-1 overflow-x-auto no-scrollbar pl-2">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className="relative flex items-center gap-1.5 px-4 text-[12.5px] font-medium transition-all duration-100 whitespace-nowrap"
+                className="relative flex items-center gap-1.5 px-4 text-[13px] font-semibold transition-all duration-150 whitespace-nowrap"
                 style={{
-                  color: isActive ? '#fff' : 'rgba(148,163,184,0.8)',
-                  background: isActive ? 'rgba(255,255,255,0.07)' : 'transparent',
+                  color: isActive ? '#10b981' : '#64748b',
+                  background: isActive ? '#ecfdf5' : 'transparent',
                   borderBottom: isActive ? '2px solid #10b981' : '2px solid transparent',
                 }}
                 onMouseEnter={e => {
                   if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = '#e2e8f0';
-                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+                    (e.currentTarget as HTMLElement).style.color = '#1e293b';
+                    (e.currentTarget as HTMLElement).style.background = '#f8fafc';
                   }
                 }}
                 onMouseLeave={e => {
                   if (!isActive) {
-                    (e.currentTarget as HTMLElement).style.color = 'rgba(148,163,184,0.8)';
+                    (e.currentTarget as HTMLElement).style.color = '#64748b';
                     (e.currentTarget as HTMLElement).style.background = 'transparent';
                   }
                 }}
               >
-                <span style={{ color: isActive ? '#10b981' : 'rgba(100,116,139,0.8)', flexShrink: 0 }}>
+                <span style={{ color: isActive ? '#10b981' : '#94a3b8', flexShrink: 0 }}>
                   {tab.icon}
                 </span>
                 {tab.label}
@@ -442,31 +444,32 @@ export default function FormBuilder() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-1.5 px-3 shrink-0" style={{ borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="flex items-center gap-2.5 px-4 shrink-0" style={{ borderLeft: '1px solid #e2e8f0' }}>
           <button
             onClick={() => navigate(`/submissions/${id}`)}
-            className="text-[12px] font-medium transition-colors whitespace-nowrap"
-            style={{ color: '#f97316' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#fb923c'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#f97316'; }}
+            className="text-[12.5px] font-bold transition-colors whitespace-nowrap px-3 py-1.5 rounded-md"
+            style={{ color: '#059669', background: '#ecfdf5' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#d1fae5'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#ecfdf5'; }}
           >
             All Entries
           </button>
           <button
             onClick={() => navigate(`/form/${id}`)}
-            className="flex items-center justify-center w-7 h-7 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="flex items-center justify-center w-8 h-8 rounded-md text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] transition-colors"
+            title="Preview"
           >
-            <Eye size={15} />
+            <Eye size={16} />
           </button>
           <button
             onClick={() => navigate(`/form/${id}`)}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded text-[12px] font-semibold text-white transition-all whitespace-nowrap"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[13px] font-bold text-white transition-all whitespace-nowrap"
             style={{
-              background: '#10b981',
-              boxShadow: '0 1px 4px rgba(16,185,129,0.4)',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              boxShadow: '0 2px 8px rgba(16,185,129,0.25)',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#059669'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#10b981'; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'linear-gradient(135deg, #059669, #047857)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'linear-gradient(135deg, #10b981, #059669)'; }}
           >
             Access Form
           </button>

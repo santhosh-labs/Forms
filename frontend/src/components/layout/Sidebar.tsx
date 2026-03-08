@@ -88,34 +88,34 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
         className="flex items-center transition-all duration-150"
         style={{
           gap: 10,
-          padding: collapsed ? '9px 0' : '7px 12px',
-          margin: '1px 6px',
+          padding: collapsed ? '9px 0' : '8px 12px',
+          margin: '2px 8px',
           borderRadius: 8,
-          width: 'calc(100% - 12px)',
-          color: active ? '#e2e8f0' : 'rgba(148,163,184,0.75)',
-          background: active ? 'rgba(52,211,153,0.12)' : 'transparent',
-          borderLeft: active ? '2.5px solid #34d399' : '2.5px solid transparent',
-          fontSize: 13,
-          fontWeight: active ? 600 : 400,
+          width: 'calc(100% - 16px)',
+          color: active ? '#059669' : '#64748b',
+          background: active ? '#ecfdf5' : 'transparent',
+          borderLeft: active ? '3px solid #10b981' : '3px solid transparent',
+          fontSize: 13.5,
+          fontWeight: active ? 600 : 500,
           justifyContent: collapsed ? 'center' : 'flex-start',
           textDecoration: 'none',
         }}
         onMouseEnter={e => {
           if (!active) {
-            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)';
-            (e.currentTarget as HTMLElement).style.color = '#e2e8f0';
+            (e.currentTarget as HTMLElement).style.background = '#f8fafc';
+            (e.currentTarget as HTMLElement).style.color = '#334155';
           }
         }}
         onMouseLeave={e => {
           if (!active) {
             (e.currentTarget as HTMLElement).style.background = 'transparent';
-            (e.currentTarget as HTMLElement).style.color = 'rgba(148,163,184,0.75)';
+            (e.currentTarget as HTMLElement).style.color = '#64748b';
           }
         }}
       >
         <Icon
-          size={15}
-          style={{ color: active ? '#34d399' : 'rgba(100,116,139,0.75)', flexShrink: 0 }}
+          size={16}
+          style={{ color: active ? '#10b981' : '#94a3b8', flexShrink: 0 }}
         />
         {!collapsed && <span>{item.label}</span>}
       </Link>
@@ -138,26 +138,26 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
         className="fixed top-0 left-0 h-screen z-40 flex flex-col transition-all duration-300 ease-in-out"
         style={{
           width: W,
-          background: 'linear-gradient(180deg, #0d1526 0%, #0a1020 100%)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
-          boxShadow: '2px 0 20px rgba(0,0,0,0.35)',
+          background: '#ffffff',
+          borderRight: '1px solid #e2e8f0',
+          boxShadow: '1px 0 15px rgba(0,0,0,0.02)',
         }}
       >
         {/* ── Logo row ─────────────────────────────────────── */}
         <div
           className="flex items-center shrink-0"
           style={{
-            height: 58,
+            height: 64,
             padding: collapsed ? '0 14px' : '0 16px',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            gap: 10,
+            borderBottom: '1px solid #e2e8f0',
+            gap: 12,
           }}
         >
           <div
             className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
             style={{
-              background: 'linear-gradient(135deg,#3B82F6,#6366F1)',
-              boxShadow: '0 0 14px rgba(99,102,241,0.45)',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              boxShadow: '0 4px 10px rgba(16,185,129,0.25)',
             }}
           >
             <Zap size={15} className="text-white" />
@@ -165,10 +165,10 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
 
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="text-white font-bold text-[13.5px] leading-tight" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-slate-800 font-extrabold text-[15px] leading-tight" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '-0.3px' }}>
                 FormFlow
               </p>
-              <p className="text-[9.5px] leading-tight" style={{ color: 'rgba(148,163,184,0.5)' }}>Enterprise</p>
+              <p className="text-[10px] uppercase font-bold tracking-[0.1em] text-emerald-600 mt-0.5" >Enterprise</p>
             </div>
           )}
 
@@ -176,14 +176,14 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
           <button
             onClick={() => onCollapsedChange(!collapsed)}
             className="hidden lg:flex w-6 h-6 items-center justify-center rounded-md transition-all duration-150 ml-auto"
-            style={{ color: 'rgba(100,116,139,0.6)', flexShrink: 0 }}
+            style={{ color: '#94a3b8', flexShrink: 0 }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)';
-              (e.currentTarget as HTMLElement).style.color = '#e2e8f0';
+              (e.currentTarget as HTMLElement).style.background = '#f1f5f9';
+              (e.currentTarget as HTMLElement).style.color = '#475569';
             }}
             onMouseLeave={e => {
               (e.currentTarget as HTMLElement).style.background = 'transparent';
-              (e.currentTarget as HTMLElement).style.color = 'rgba(100,116,139,0.6)';
+              (e.currentTarget as HTMLElement).style.color = '#94a3b8';
             }}
           >
             {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
@@ -198,15 +198,15 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
               {si > 0 && (
                 <div
                   className="mx-4 my-2"
-                  style={{ height: 1, background: 'rgba(255,255,255,0.06)' }}
+                  style={{ height: 1, background: '#f1f5f9' }}
                 />
               )}
 
               {/* Section label */}
               {!collapsed && (
                 <p
-                  className="px-4 pt-1 pb-1.5 text-[11px] font-semibold"
-                  style={{ color: '#34d399' }}
+                  className="px-5 pt-2 pb-1.5 text-[11px] font-bold uppercase tracking-[0.08em]"
+                  style={{ color: '#94a3b8' }}
                 >
                   {section.label}
                 </p>
@@ -220,7 +220,7 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
           ))}
 
           {/* ── Trash (special red item at bottom of nav) ── */}
-          <div className="mx-4 my-2" style={{ height: 1, background: 'rgba(255,255,255,0.06)' }} />
+          <div className="mx-4 my-2" style={{ height: 1, background: '#f1f5f9' }} />
           <Link
             to="/trash"
             title={collapsed ? 'Trash' : undefined}
@@ -228,32 +228,32 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
             className="flex items-center transition-all duration-150"
             style={{
               gap: 10,
-              padding: collapsed ? '9px 0' : '7px 12px',
-              margin: '1px 6px',
+              padding: collapsed ? '9px 0' : '8px 12px',
+              margin: '2px 8px',
               borderRadius: 8,
-              width: 'calc(100% - 12px)',
-              color: isActive('/trash') ? '#f87171' : 'rgba(248,113,113,0.6)',
-              background: isActive('/trash') ? 'rgba(239,68,68,0.1)' : 'transparent',
-              borderLeft: isActive('/trash') ? '2.5px solid #f87171' : '2.5px solid transparent',
-              fontSize: 13,
-              fontWeight: isActive('/trash') ? 600 : 400,
+              width: 'calc(100% - 16px)',
+              color: isActive('/trash') ? '#ef4444' : '#94a3b8',
+              background: isActive('/trash') ? '#fef2f2' : 'transparent',
+              borderLeft: isActive('/trash') ? '3px solid #ef4444' : '3px solid transparent',
+              fontSize: 13.5,
+              fontWeight: isActive('/trash') ? 600 : 500,
               justifyContent: collapsed ? 'center' : 'flex-start',
               textDecoration: 'none',
             }}
             onMouseEnter={e => {
               if (!isActive('/trash')) {
-                (e.currentTarget as HTMLElement).style.background = 'rgba(239,68,68,0.08)';
-                (e.currentTarget as HTMLElement).style.color = '#f87171';
+                (e.currentTarget as HTMLElement).style.background = '#fef2f2';
+                (e.currentTarget as HTMLElement).style.color = '#ef4444';
               }
             }}
             onMouseLeave={e => {
               if (!isActive('/trash')) {
                 (e.currentTarget as HTMLElement).style.background = 'transparent';
-                (e.currentTarget as HTMLElement).style.color = 'rgba(248,113,113,0.6)';
+                (e.currentTarget as HTMLElement).style.color = '#94a3b8';
               }
             }}
           >
-            <Trash2 size={15} style={{ color: isActive('/trash') ? '#f87171' : 'rgba(248,113,113,0.6)', flexShrink: 0 }} />
+            <Trash2 size={16} style={{ color: isActive('/trash') ? '#ef4444' : '#94a3b8', flexShrink: 0 }} />
             {!collapsed && <span>Trash</span>}
           </Link>
         </nav>
@@ -261,7 +261,7 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
         {/* ── User footer ───────────────────────────────────── */}
         <div
           className="shrink-0"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.06)', position: 'relative' }}
+          style={{ borderTop: '1px solid #e2e8f0', position: 'relative' }}
           ref={userRef}
         >
           <button
@@ -269,25 +269,25 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
             className="flex items-center w-full transition-all duration-150"
             style={{
               gap: 10,
-              padding: collapsed ? '13px 0' : '12px 16px',
+              padding: collapsed ? '13px 0' : '15px 16px',
               justifyContent: collapsed ? 'center' : 'flex-start',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)'; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#f8fafc'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
           >
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0"
-              style={{ background: 'linear-gradient(135deg,#3B82F6,#6366F1)' }}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-white text-[13px] font-bold shrink-0"
+              style={{ background: 'linear-gradient(135deg,#10b981,#059669)', boxShadow: '0 2px 6px rgba(16,185,129,0.25)' }}
             >
               H
             </div>
             {!collapsed && (
               <>
                 <div className="min-w-0 flex-1 text-left">
-                  <p style={{ fontSize: 12.5, fontWeight: 600, color: '#e2e8f0', lineHeight: '1.3' }}>Hemanth</p>
-                  <p style={{ fontSize: 10.5, color: 'rgba(148,163,184,0.55)', lineHeight: '1.3' }}>hemanth@formflow.io</p>
+                  <p style={{ fontSize: 13.5, fontWeight: 700, color: '#1e293b', lineHeight: '1.3' }}>Hemanth</p>
+                  <p style={{ fontSize: 11.5, color: '#64748b', lineHeight: '1.3' }}>hemanth@formflow.io</p>
                 </div>
-                <Settings size={13} style={{ color: 'rgba(100,116,139,0.5)', flexShrink: 0 }} />
+                <Settings size={15} style={{ color: '#94a3b8', flexShrink: 0 }} />
               </>
             )}
           </button>
@@ -295,61 +295,61 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
           {/* User popup menu (opens upward) */}
           {showUserMenu && (
             <div
-              className="absolute w-52 rounded-xl overflow-hidden"
+              className="absolute w-60 rounded-xl overflow-hidden"
               style={{
                 bottom: '100%',
                 left: collapsed ? 72 : 12,
                 right: collapsed ? undefined : 12,
                 marginBottom: 8,
-                background: '#1e293b',
-                border: '1px solid rgba(255,255,255,0.09)',
-                boxShadow: '0 -8px 32px rgba(0,0,0,0.4)',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 -4px 24px rgba(0,0,0,0.08), 0 0 4px rgba(0,0,0,0.04)',
                 zIndex: 50,
               }}
             >
-              <div className="px-4 py-3.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="px-5 py-4 bg-gray-50/50" style={{ borderBottom: '1px solid #e2e8f0' }}>
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                    style={{ background: 'linear-gradient(135deg,#3B82F6,#6366F1)' }}
+                    className="w-11 h-11 rounded-full flex items-center justify-center text-white text-md font-bold shrink-0 shadow-sm"
+                    style={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
                   >H</div>
                   <div>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: '#e2e8f0' }}>Hemanth</p>
-                    <p style={{ fontSize: 11, color: '#64748b', marginTop: 1 }}>hemanth@formflow.io</p>
+                    <p style={{ fontSize: 14.5, fontWeight: 700, color: '#1e293b' }}>Hemanth</p>
+                    <p style={{ fontSize: 12, color: '#64748b', marginTop: 1 }}>hemanth@formflow.io</p>
                   </div>
                 </div>
                 <span
-                  className="inline-flex mt-2.5 px-2 py-0.5 rounded-full"
-                  style={{ fontSize: 9.5, fontWeight: 700, background: 'rgba(99,102,241,0.2)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}
+                  className="inline-flex mt-3.5 px-3 py-1 rounded-full shadow-sm"
+                  style={{ fontSize: 10, fontWeight: 700, background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}
                 >
-                  Free Plan
+                  Enterprise Plan
                 </span>
               </div>
-              <div className="py-1">
+              <div className="py-1.5">
                 {[
-                  { icon: <User size={13} />, label: 'My Account' },
-                  { icon: <Settings size={13} />, label: 'Settings' },
-                  { icon: <HelpCircle size={13} />, label: 'Help & Support' },
+                  { icon: <User size={15} />, label: 'My Account' },
+                  { icon: <Settings size={15} />, label: 'Settings' },
+                  { icon: <HelpCircle size={15} />, label: 'Help & Support' },
                 ].map(it => (
                   <button
                     key={it.label}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 transition-colors duration-100"
-                    style={{ fontSize: 12.5, fontWeight: 500, color: '#94a3b8' }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)'; (e.currentTarget as HTMLElement).style.color = '#e2e8f0'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#94a3b8'; }}
+                    className="w-full flex items-center gap-3.5 px-5 py-3 transition-colors duration-100"
+                    style={{ fontSize: 13.5, fontWeight: 500, color: '#475569' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#f8fafc'; (e.currentTarget as HTMLElement).style.color = '#0f172a'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#475569'; }}
                   >
-                    <span style={{ color: 'rgba(100,116,139,0.7)' }}>{it.icon}</span>
+                    <span style={{ color: '#94a3b8' }}>{it.icon}</span>
                     {it.label}
                   </button>
                 ))}
-                <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '4px 0' }} />
+                <div style={{ height: 1, background: '#f1f5f9', margin: '4px 0' }} />
                 <button
-                  className="w-full flex items-center gap-3 px-4 py-2.5 transition-colors duration-100"
-                  style={{ fontSize: 12.5, fontWeight: 500, color: '#f87171' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(239,68,68,0.08)'; }}
+                  className="w-full flex items-center gap-3.5 px-5 py-3 transition-colors duration-100"
+                  style={{ fontSize: 13.5, fontWeight: 600, color: '#ef4444' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#fef2f2'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                 >
-                  <LogOut size={13} />
+                  <LogOut size={15} />
                   Sign out
                 </button>
               </div>
@@ -361,8 +361,8 @@ export default function Sidebar({ collapsed, onCollapsedChange, mobileOpen, onMo
       <style>{`
         .sidebar-scroll::-webkit-scrollbar { width: 3px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        .sidebar-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
       `}</style>
     </>
   );

@@ -20,14 +20,14 @@ const DEFAULT_ADDRESS_ELEMENTS = [
 function AddressElement({ label, mandatory, visible, onToggleVisible, onToggleMandatory }:
   { label: string; mandatory: boolean; visible: boolean; onToggleVisible: () => void; onToggleMandatory: () => void }) {
   return (
-    <div className="flex items-center gap-2 py-2 border border-gray-200 rounded-lg px-3 bg-white group">
-      <GripVertical size={14} className="text-gray-300 cursor-move shrink-0" />
-      <span className="flex-1 text-sm text-gray-700">{label}</span>
-      <button onClick={onToggleVisible} className="p-1 text-gray-400 hover:text-gray-600 shrink-0">
-        {visible ? <Eye size={15} /> : <EyeOff size={15} />}
+    <div className="flex items-center gap-2 py-1.5 border border-slate-200 rounded px-2.5 bg-white group hover:border-emerald-300 hover:bg-emerald-50/30 transition-all">
+      <GripVertical size={13} className="text-slate-300 cursor-move shrink-0" />
+      <span className="flex-1 text-[12px] font-medium text-slate-700">{label}</span>
+      <button onClick={onToggleVisible} className="p-1 text-slate-400 hover:text-emerald-600 shrink-0">
+        {visible ? <Eye size={13} /> : <EyeOff size={13} />}
       </button>
       <input type="checkbox" checked={mandatory} onChange={onToggleMandatory}
-        className="w-4 h-4 rounded border-gray-300 accent-teal-600 cursor-pointer shrink-0" />
+        className="w-3.5 h-3.5 rounded border-slate-300 accent-emerald-600 cursor-pointer shrink-0" />
     </div>
   );
 }
@@ -42,22 +42,22 @@ function AddressProperties({ field, onUpdate }: { field: FormField; onUpdate: (u
   return (
     <>
       {/* Countries Configuration */}
-      <div className="border-t border-gray-100 pt-5 space-y-4">
+      <div className="border-t border-slate-100 pt-4 space-y-3">
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-1.5">Allowed Countries</label>
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Allowed Countries</label>
           <input
             type="text"
             value={field.allowedCountries?.join(', ') || 'All countries'}
             onChange={e => onUpdate({ allowedCountries: e.target.value.split(',').map(s => s.trim()) })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full px-2.5 py-1.5 border border-slate-200 rounded text-[12.5px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-800 mb-1.5">Default Country</label>
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Default Country</label>
           <select
             value={field.defaultCountry || ''}
             onChange={e => onUpdate({ defaultCountry: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:ring-2 focus:ring-teal-500 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_8px_center] pr-8"
+            className="w-full px-2.5 py-1.5 border border-slate-200 rounded text-[12.5px] bg-white outline-none focus:ring-1 focus:ring-emerald-500 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%221.5%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_8px_center] pr-8"
           >
             <option value="">-Select-</option>
             <option value="US">United States</option>
@@ -69,12 +69,12 @@ function AddressProperties({ field, onUpdate }: { field: FormField; onUpdate: (u
       </div>
 
       {/* Address Elements */}
-      <div className="border-t border-gray-100 pt-5">
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-sm font-semibold text-gray-800">Address Elements</h4>
-          <span className="text-xs font-semibold text-gray-400">Mandatory</span>
+      <div className="border-t border-slate-100 pt-4">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Address Elements</h4>
+          <span className="text-[10px] font-bold uppercase text-slate-400">Mandatory</span>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {elements.map((el, i) => (
             <AddressElement
               key={el.label}
@@ -91,24 +91,24 @@ function AddressProperties({ field, onUpdate }: { field: FormField; onUpdate: (u
         <div className="flex items-center gap-4 mt-3">
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={showLabels} onChange={() => onUpdate({ showAddressLabels: !showLabels })}
-              className="w-4 h-4 rounded border-gray-300 accent-teal-600" />
-            <span className="text-xs text-gray-600">Show Elements Label</span>
+              className="w-3.5 h-3.5 rounded border-slate-300 accent-emerald-600" />
+            <span className="text-[12px] text-slate-600 font-medium">Show Elements Label</span>
           </label>
         </div>
       </div>
 
       {/* Address Auto-fill */}
-      <div className="border-t border-gray-100 pt-5">
-        <div className="flex items-center gap-1.5 mb-3">
-          <h4 className="text-sm font-semibold text-gray-800">Address Auto-fill & Postal/Zip Code Validation</h4>
-          <Info size={13} className="text-gray-400" />
+      <div className="border-t border-slate-100 pt-4">
+        <div className="flex items-center gap-1.5 mb-2">
+          <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Auto-fill & Validation</h4>
+          <Info size={12} className="text-slate-400" />
         </div>
-        <p className="text-xs text-gray-500 mb-3">Select Map Service</p>
+        <p className="text-[11.5px] text-slate-500 mb-2">Select Map Service</p>
         <div className="flex gap-2">
           {([['none', 'None', '🚫'], ['google', 'Google Maps', '📍']] as const).map(([val, label, icon]) => (
             <button key={val} onClick={() => onUpdate({ mapService: val })}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-all
-                ${mapService === val ? 'border-teal-500 text-teal-600 bg-teal-50' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded border text-[11px] font-semibold transition-all
+                ${mapService === val ? 'border-emerald-500 text-emerald-700 bg-emerald-50' : 'border-slate-200 text-slate-500 hover:border-slate-300'}`}>
               <span>{icon}</span> {label}
             </button>
           ))}
@@ -116,17 +116,17 @@ function AddressProperties({ field, onUpdate }: { field: FormField; onUpdate: (u
       </div>
 
       {/* Input method */}
-      <div className="border-t border-gray-100 pt-5">
-        <p className="text-xs font-semibold text-gray-700 mb-3">Input Method: State/Region/Province</p>
-        <div className="flex gap-4">
+      <div className="border-t border-slate-100 pt-4">
+        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">State/Region Input Method</p>
+        <div className="flex flex-col gap-2">
           {([['text', 'Text Input'], ['auto', 'Auto-generated State List']] as const).map(([val, label]) => (
             <label key={val} className="flex items-center gap-2 cursor-pointer">
-              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center
-                ${stateInputMethod === val ? 'border-teal-500' : 'border-gray-300'}`}
+              <div className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center
+                ${stateInputMethod === val ? 'border-emerald-500' : 'border-slate-300'}`}
                 onClick={() => onUpdate({ mapInputMethod: val })}>
-                {stateInputMethod === val && <div className="w-2 h-2 rounded-full bg-teal-500" />}
+                {stateInputMethod === val && <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />}
               </div>
-              <span className="text-xs text-gray-600">{label}</span>
+              <span className="text-[12px] font-medium text-slate-600">{label}</span>
             </label>
           ))}
         </div>
@@ -217,10 +217,10 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <label className="text-sm font-semibold text-red-500">Field Label</label>
           </div>
           <input type="text" value={pendingLabel} onChange={e => syncLabelAndHelpText(e.target.value, undefined)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
           <label className="flex items-center gap-2 mt-2 cursor-pointer">
             <input type="checkbox" checked={field.hideLabel || false} onChange={e => onUpdate({ hideLabel: e.target.checked })}
-              className="w-4 h-4 rounded border-gray-300 accent-teal-600" />
+              className="w-4 h-4 rounded border-gray-300 accent-emerald-600" />
             <span className="text-xs text-gray-600">Hide Field Label</span>
           </label>
         </div>
@@ -229,14 +229,14 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">Instructions</label>
           <textarea value={instructions} onChange={e => syncLabelAndHelpText(undefined, e.target.value)} rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500 resize-none" />
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500 resize-none" />
         </div>
 
         {/* Hover Text */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">Hover Text</label>
           <input type="text" value={field.hoverText || ''} onChange={e => onUpdate({ hoverText: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
         </div>
 
         {/* Matrix Choice Sub-Type configuration */}
@@ -246,7 +246,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <select
               value={field.type}
               onChange={e => onUpdate({ type: e.target.value as FieldType })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             >
               <option value="matrix_radio">Radio</option>
               <option value="matrix_checkbox">Checkbox</option>
@@ -263,7 +263,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-700">Required Field</span>
             <button onClick={() => onUpdate({ required: !field.required })}
-              className={`relative w-10 h-5 rounded-full transition-colors ${field.required ? 'bg-teal-500' : 'bg-gray-200'}`}>
+              className={`relative w-10 h-5 rounded-full transition-colors ${field.required ? 'bg-emerald-500' : 'bg-gray-200'}`}>
               <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${field.required ? 'translate-x-5' : ''}`} />
             </button>
           </div>
@@ -272,7 +272,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <label className="block text-xs font-semibold text-gray-500 uppercase mb-1.5">Custom Error Message</label>
               <input type="text" value={field.customErrorMessage || ''} onChange={e => onUpdate({ customErrorMessage: e.target.value })}
                 placeholder="This field is required"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
           )}
         </div>
@@ -283,7 +283,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Default Value</label>
             {field.type === 'yes_no' ? (
               <select value={String(field.defaultValue || '')} onChange={e => onUpdate({ defaultValue: e.target.value === 'true' ? true : e.target.value === 'false' ? false : undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500">
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500">
                 <option value="">None</option>
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -291,7 +291,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             ) : (
               <input type={field.type === 'number' || field.type === 'decimal' ? 'number' : 'text'}
                 value={String(field.defaultValue || '')} onChange={e => onUpdate({ defaultValue: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             )}
           </div>
         )}
@@ -309,7 +309,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <label className="text-sm font-semibold text-gray-900">Questions</label>
               </div>
               <label className="flex items-center gap-2 mb-4 cursor-pointer px-1">
-                <input type="checkbox" checked={field.matrixRowsRequired || false} onChange={e => onUpdate({ matrixRowsRequired: e.target.checked })} className="w-4 h-4 border border-gray-300 rounded bg-white accent-teal-600" />
+                <input type="checkbox" checked={field.matrixRowsRequired || false} onChange={e => onUpdate({ matrixRowsRequired: e.target.checked })} className="w-4 h-4 border border-gray-300 rounded bg-white accent-emerald-600" />
                 <span className="text-[13px] font-medium text-gray-600">Mark All as Mandatory</span>
               </label>
 
@@ -319,9 +319,9 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                     <div className="w-4 h-4 border border-gray-300 rounded bg-white shrink-0"></div>
                     <span className="text-[13px] font-medium text-blue-600 w-5">R{i + 1}</span>
                     <input type="text" value={opt} onChange={e => updateMatrixRow(i, e.target.value)}
-                      className="flex-1 px-3 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-teal-500" />
+                      className="flex-1 px-3 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-emerald-500" />
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <button onClick={() => addMatrixRow()} className="text-teal-500 hover:text-teal-600 transition-colors">
+                      <button onClick={() => addMatrixRow()} className="text-emerald-500 hover:text-emerald-600 transition-colors">
                         <PlusCircle size={18} strokeWidth={1.5} />
                       </button>
                       <button onClick={() => removeMatrixRow(i)} className="text-red-500 hover:text-red-600 transition-colors" disabled={mRows.length <= 1}>
@@ -339,7 +339,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <label className="text-sm font-semibold text-gray-900">Answers</label>
               </div>
               <label className="flex items-center gap-2 mb-4 cursor-pointer px-1">
-                <input type="checkbox" checked={field.matrixColsRequired || false} onChange={e => onUpdate({ matrixColsRequired: e.target.checked })} className="w-4 h-4 rounded border-gray-300 accent-teal-600" />
+                <input type="checkbox" checked={field.matrixColsRequired || false} onChange={e => onUpdate({ matrixColsRequired: e.target.checked })} className="w-4 h-4 rounded border-gray-300 accent-emerald-600" />
                 <span className="text-[13px] font-medium text-gray-500">Mark All as Mandatory</span>
               </label>
 
@@ -350,11 +350,11 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                     <span className="text-[13px] font-medium text-blue-600 w-5">C{i + 1}</span>
                     <div className="flex-1 relative">
                       <input type="text" value={opt} onChange={e => updateMatrixCol(i, e.target.value)}
-                        className="w-full pl-3 pr-8 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-teal-500" />
+                        className="w-full pl-3 pr-8 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-emerald-500" />
                       <Menu size={15} strokeWidth={1.5} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500" />
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <button onClick={() => addMatrixCol()} className="text-teal-500 hover:text-teal-600 transition-colors">
+                      <button onClick={() => addMatrixCol()} className="text-emerald-500 hover:text-emerald-600 transition-colors">
                         <PlusCircle size={18} strokeWidth={1.5} />
                       </button>
                       <button onClick={() => removeMatrixCol(i)} className="text-red-500 hover:text-red-600 transition-colors" disabled={mCols.length <= 1}>
@@ -371,7 +371,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                     const items = window.prompt("Enter comma-separated predefined answers:", "Yes, No, Maybe");
                     if (items) onUpdate({ matrixColumns: items.split(',').map(s => s.trim()) });
                   }}
-                  className="text-teal-600 hover:underline"
+                  className="text-emerald-600 hover:underline"
                 >
                   Import predefined answers
                 </button>
@@ -389,7 +389,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <select
                   value={field.imageChoiceType || 'single'}
                   onChange={e => onUpdate({ imageChoiceType: e.target.value as any })}
-                  className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
                 >
                   <option value="single">Single-Select</option>
                   <option value="multiple">Multi-Select</option>
@@ -400,7 +400,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <select
                   value={field.imageValueType || 'numeric'}
                   onChange={e => onUpdate({ imageValueType: e.target.value as any })}
-                  className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
                 >
                   <option value="text">Textual</option>
                   <option value="numeric">Numeric</option>
@@ -415,7 +415,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <select
                   value={field.imageDecimalPlaces || 2}
                   onChange={e => onUpdate({ imageDecimalPlaces: parseInt(e.target.value) })}
-                  className="w-20 px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-20 px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
                 >
                   <option value="0">0</option>
                   <option value="2">2</option>
@@ -436,7 +436,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 {(field.imageChoices || [{ id: '1', label: 'Label', value: '' }]).map((choice, i) => (
                   <div key={choice.id} className="grid grid-cols-[30px_1fr_1fr_1fr_50px] gap-2 items-center">
                     <div className="flex justify-center">
-                      <div className={`w-4 h-4 rounded-full border border-gray-300 bg-white ${i === 0 ? 'ring-2 ring-teal-500 ring-offset-2' : ''}`}></div>
+                      <div className={`w-4 h-4 rounded-full border border-gray-300 bg-white ${i === 0 ? 'ring-2 ring-emerald-500 ring-offset-2' : ''}`}></div>
                     </div>
                     <button className="flex items-center justify-center gap-1.5 px-2 py-1.5 border border-gray-200 rounded bg-white text-[11px] font-medium text-gray-500 hover:border-gray-300">
                       <Icons.ImagePlus size={14} /> Upload
@@ -446,17 +446,17 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                       value={choice.label}
                       onChange={e => updateImageChoice(choice.id, { label: e.target.value })}
                       placeholder="Label"
-                      className="px-2 py-1.5 border border-gray-200 rounded text-[12px] bg-white outline-none focus:ring-1 focus:ring-teal-500"
+                      className="px-2 py-1.5 border border-gray-200 rounded text-[12px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                     <input
                       type="text"
                       value={choice.value}
                       onChange={e => updateImageChoice(choice.id, { value: e.target.value })}
                       placeholder="Value"
-                      className="px-2 py-1.5 border border-gray-200 rounded text-[12px] bg-white outline-none focus:ring-1 focus:ring-teal-500"
+                      className="px-2 py-1.5 border border-gray-200 rounded text-[12px] bg-white outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                     <div className="flex items-center gap-1">
-                      <button onClick={addImageChoice} className="text-teal-500 hover:text-teal-600 transition-colors">
+                      <button onClick={addImageChoice} className="text-emerald-500 hover:text-emerald-600 transition-colors">
                         <PlusCircle size={18} strokeWidth={1.5} />
                       </button>
                       <button onClick={() => removeImageChoice(choice.id)} className="text-red-500 hover:text-red-600 transition-colors" disabled={(field.imageChoices?.length || 1) <= 1}>
@@ -481,9 +481,9 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <div key={i} className="flex items-center gap-3">
                   <Menu size={15} strokeWidth={1.5} className="text-gray-400 shrink-0 cursor-move" />
                   <input type="text" value={opt} onChange={e => updateOption(i, e.target.value)}
-                    className="flex-1 px-3 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-teal-500" />
+                    className="flex-1 px-3 py-1.5 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-emerald-500" />
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <button onClick={() => addOption()} className="text-teal-500 hover:text-teal-600 transition-colors">
+                    <button onClick={() => addOption()} className="text-emerald-500 hover:text-emerald-600 transition-colors">
                       <PlusCircle size={18} strokeWidth={1.5} />
                     </button>
                     <button onClick={() => removeOption(i)} disabled={(field.options || []).length <= 1} className="text-red-500 hover:text-red-600 transition-colors disabled:opacity-50">
@@ -500,13 +500,13 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                   const items = window.prompt("Enter comma-separated choices:", "Option 1, Option 2, Option 3");
                   if (items) onUpdate({ options: items.split(',').map(s => s.trim()) });
                 }}
-                className="text-[13px] font-medium text-teal-600 hover:underline"
+                className="text-[13px] font-medium text-emerald-600 hover:underline"
               >
                 Import Predefined Choices
               </button>
               <button
                 onClick={() => onUpdate({ options: [] })}
-                className="text-[13px] font-medium text-teal-600 hover:underline"
+                className="text-[13px] font-medium text-emerald-600 hover:underline"
               >
                 Clear All
               </button>
@@ -514,7 +514,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               {field.type === 'dropdown' && (
                 <label className="flex items-center gap-2 mt-2 cursor-pointer">
                   <input type="checkbox" checked={field.allowMultipleChoices || false} onChange={e => onUpdate({ allowMultipleChoices: e.target.checked })}
-                    className="w-4 h-4 rounded border-gray-300 accent-teal-600" />
+                    className="w-4 h-4 rounded border-gray-300 accent-emerald-600" />
                   <span className="text-[13px] font-medium text-gray-600">Allow Multiple Selections</span>
                 </label>
               )}
@@ -529,7 +529,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               Placeholder <span className="normal-case font-normal text-gray-400">(Optional)</span>
             </label>
             <input type="text" value={field.placeholder || ''} onChange={e => onUpdate({ placeholder: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
         )}
 
@@ -540,12 +540,12 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <div className="flex-1">
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Min Length</label>
                 <input type="number" value={field.minLength || ''} onChange={e => onUpdate({ minLength: parseInt(e.target.value) || undefined })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
               </div>
               <div className="flex-1">
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Max Length</label>
                 <input type="number" value={field.maxLength || ''} onChange={e => onUpdate({ maxLength: parseInt(e.target.value) || undefined })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
               </div>
             </div>
           </div>
@@ -557,7 +557,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Phone Format</label>
               <select value={field.phoneFormat || 'international'} onChange={e => onUpdate({ phoneFormat: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500">
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500">
                 <option value="international">International</option>
                 <option value="us">US (XXX-XXX-XXXX)</option>
               </select>
@@ -565,7 +565,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Country Code</label>
               <select value={field.defaultCountryCode || 'US'} onChange={e => onUpdate({ defaultCountryCode: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500">
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500">
                 <option value="US">United States (+1)</option>
                 <option value="GB">United Kingdom (+44)</option>
                 <option value="IN">India (+91)</option>
@@ -582,14 +582,14 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <input type="number"
                 value={field.minLimit || ''}
                 onChange={e => onUpdate({ minLimit: parseInt(e.target.value) || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
             <div className="flex-1">
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Maximum</label>
               <input type="number"
                 value={field.maxLimit || ''}
                 onChange={e => onUpdate({ maxLimit: parseInt(e.target.value) || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
           </div>
         )}
@@ -601,7 +601,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <input type="number"
               value={field.step || 1}
               onChange={e => onUpdate({ step: parseInt(e.target.value) || undefined })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
         )}
 
@@ -614,7 +614,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 value={field.prefix || ''}
                 onChange={e => onUpdate({ prefix: e.target.value || undefined })}
                 placeholder="$"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
             <div className="flex-1">
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Suffix</label>
@@ -622,7 +622,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 value={field.suffix || ''}
                 onChange={e => onUpdate({ suffix: e.target.value || undefined })}
                 placeholder="e.g. USD"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
           </div>
         )}
@@ -634,7 +634,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <select
               value={field.currencyType || 'USD'}
               onChange={e => onUpdate({ currencyType: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             >
               <option value="USD">USD ($)</option>
               <option value="EUR">EUR (€)</option>
@@ -651,7 +651,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
             <select
               value={field.dateFormat || 'MM/DD/YYYY'}
               onChange={e => onUpdate({ dateFormat: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             >
               <option value="MM/DD/YYYY">MM/DD/YYYY</option>
               <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -665,17 +665,17 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
           <div className="space-y-6">
             <div className="border-t border-gray-100 pt-5">
               <label className="block text-[13px] font-semibold text-gray-800 mb-2">Time Format</label>
-              <div className="flex border border-teal-500 rounded-md overflow-hidden bg-white">
+              <div className="flex border border-emerald-500 rounded-md overflow-hidden bg-white">
                 <button
                   onClick={() => onUpdate({ timeFormat: '12h' })}
-                  className={`flex-1 py-1.5 text-[13px] font-medium transition-colors ${field.timeFormat !== '24h' ? 'bg-teal-50 text-teal-700' : 'text-gray-500 hover:bg-gray-50'}`}
+                  className={`flex-1 py-1.5 text-[13px] font-medium transition-colors ${field.timeFormat !== '24h' ? 'bg-emerald-50 text-emerald-700' : 'text-gray-500 hover:bg-gray-50'}`}
                 >
                   12 Hours
                 </button>
                 <div className="w-[1px] bg-gray-200" />
                 <button
                   onClick={() => onUpdate({ timeFormat: '24h' })}
-                  className={`flex-1 py-1.5 text-[13px] font-medium transition-colors ${field.timeFormat === '24h' ? 'bg-teal-50 text-teal-700' : 'text-gray-500 hover:bg-gray-50'}`}
+                  className={`flex-1 py-1.5 text-[13px] font-medium transition-colors ${field.timeFormat === '24h' ? 'bg-emerald-50 text-emerald-700' : 'text-gray-500 hover:bg-gray-50'}`}
                 >
                   24 Hours
                 </button>
@@ -690,7 +690,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                     key={interval}
                     onClick={() => onUpdate({ minuteInterval: interval })}
                     className={`flex items-center justify-center w-[34px] h-[34px] rounded-full border text-[13px] font-medium transition-colors ${field.minuteInterval === interval || (!field.minuteInterval && interval === 1)
-                      ? 'border-teal-500 text-teal-600'
+                      ? 'border-emerald-500 text-emerald-600'
                       : 'border-gray-200 text-gray-400 hover:border-gray-300'
                       }`}
                   >
@@ -705,7 +705,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <div className="flex items-center gap-1.5">
                 <div className="flex flex-col">
                   <select
-                    className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-emerald-500"
                     value={field.initialTime?.split(':')[0] || ''}
                     onChange={e => {
                       const hrs = e.target.value;
@@ -725,7 +725,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 <span className="text-gray-500 font-medium mb-5">:</span>
                 <div className="flex flex-col">
                   <select
-                    className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-emerald-500"
                     value={field.initialTime?.split(':')[1] || ''}
                     onChange={e => {
                       const hrs = field.initialTime?.split(':')[0] || '12';
@@ -747,7 +747,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                     <span className="text-gray-500 font-medium mb-5"> </span>
                     <div className="mb-5">
                       <select
-                        className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-teal-500"
+                        className="w-[65px] px-2 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-700 outline-none focus:ring-1 focus:ring-emerald-500"
                         value={field.initialTime?.split(':')[2] || ''}
                         onChange={e => {
                           const hrs = field.initialTime?.split(':')[0] || '12';
@@ -765,7 +765,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 )}
                 <button
                   onClick={() => onUpdate({ initialTime: undefined })}
-                  className="text-[13px] text-teal-600 font-medium hover:underline ml-2 mb-5"
+                  className="text-[13px] text-emerald-600 font-medium hover:underline ml-2 mb-5"
                 >
                   Reset
                 </button>
@@ -773,7 +773,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
 
               <label className="flex items-center gap-2 mt-4 cursor-pointer">
                 <input type="checkbox" checked={field.autofillTime || false} onChange={e => onUpdate({ autofillTime: e.target.checked })}
-                  className="w-4 h-4 rounded border-gray-300 accent-teal-600" />
+                  className="w-4 h-4 rounded border-gray-300 accent-emerald-600" />
                 <span className="text-[13px] font-medium text-gray-600">Autofill Time of Response</span>
               </label>
             </div>
@@ -789,14 +789,14 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <input type="number"
                 value={field.ratingScale || 5}
                 onChange={e => onUpdate({ ratingScale: parseInt(e.target.value) || 5 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
             <div className="flex-1">
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Shape</label>
               <select
                 value={field.ratingShape || 'star'}
                 onChange={e => onUpdate({ ratingShape: e.target.value as 'star' | 'heart' | 'smile' })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="star">★ Star</option>
                 <option value="heart">♥ Heart</option>
@@ -814,14 +814,14 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
               <input type="text"
                 value={field.yesLabel || 'Yes'}
                 onChange={e => onUpdate({ yesLabel: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
             <div className="flex-1">
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">No Label</label>
               <input type="text"
                 value={field.noLabel || 'No'}
                 onChange={e => onUpdate({ noLabel: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
             </div>
           </div>
         )}
@@ -835,7 +835,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 value={field.termsText || 'I agree to the terms and conditions'}
                 onChange={e => onUpdate({ termsText: e.target.value })}
                 rows={2}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
               />
             </div>
             {field.type === 'terms' && (
@@ -845,7 +845,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                   value={field.termsLink || ''}
                   onChange={e => onUpdate({ termsLink: e.target.value })}
                   placeholder="https://example.com/terms"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-teal-500" />
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500" />
               </div>
             )}
           </div>
@@ -860,7 +860,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                 value={field.allowedFileTypes || ''}
                 onChange={e => onUpdate({ allowedFileTypes: e.target.value })}
                 placeholder="eg. : pdf,txt,doc"
-                className="w-full px-3 py-2 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-teal-500 placeholder-gray-400" />
+                className="w-full px-3 py-2 border border-gray-200 rounded text-[13px] outline-none focus:ring-1 focus:ring-emerald-500 placeholder-gray-400" />
               <p className="text-[11px] text-gray-400 mt-1.5">By default, all file types are accepted.</p>
             </div>
 
@@ -871,7 +871,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                   <select
                     value={field.uploadLimitMin || 'N/A'}
                     onChange={e => onUpdate({ uploadLimitMin: e.target.value === 'N/A' ? 'N/A' : parseInt(e.target.value) })}
-                    className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-600 outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-600 outline-none focus:ring-1 focus:ring-emerald-500"
                   >
                     <option value="N/A">N/A</option>
                     <option value="1">1</option>
@@ -883,7 +883,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
                   <select
                     value={field.uploadLimitMax || 1}
                     onChange={e => onUpdate({ uploadLimitMax: parseInt(e.target.value) || undefined })}
-                    className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-600 outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full px-3 py-1.5 border border-gray-200 rounded text-[13px] bg-white text-gray-600 outline-none focus:ring-1 focus:ring-emerald-500"
                   >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -942,7 +942,7 @@ export default function FieldSettingsPanel({ field, onUpdate, onDelete, onDuplic
 
             <div className="border-t border-gray-100 pt-5">
               <label className="block text-[13px] font-semibold text-gray-800 mb-2">File Name Prefix</label>
-              <div className="border border-gray-200 rounded min-h-[40px] bg-white flex items-center p-2 relative focus-within:ring-1 focus-within:ring-teal-500">
+              <div className="border border-gray-200 rounded min-h-[40px] bg-white flex items-center p-2 relative focus-within:ring-1 focus-within:ring-emerald-500">
                 <input
                   type="text"
                   value={field.fileNamePrefix || ''}

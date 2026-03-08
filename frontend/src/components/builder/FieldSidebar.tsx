@@ -29,18 +29,18 @@ function GridCard({ cols, onClick }: { cols: 1 | 2 | 3; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center justify-center gap-2.5 p-3 rounded-2xl border border-gray-100 bg-white hover:border-indigo-300 hover:bg-white hover:shadow-md transition-all duration-200 group h-[100px]"
+      className="flex flex-col items-center justify-center gap-1.5 p-1.5 rounded-lg border border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/30 hover:shadow-sm transition-all duration-200 group h-[64px]"
     >
-      <div className="flex gap-1 items-center justify-center h-8">
+      <div className="flex gap-[3px] items-center justify-center h-5 w-full px-3">
         {Array.from({ length: cols }).map((_, i) => (
           <div
             key={i}
-            className="w-2.5 h-4.5 rounded-[1px] border-[1.5px] border-amber-400/80 bg-white shadow-[1px_1px_0px_rgba(251,191,36,0.1)]"
-            style={{ width: '10px', height: '18px' }}
+            className="h-[14px] rounded-[2px] bg-amber-50 border border-amber-300 shadow-sm"
+            style={{ width: cols === 1 ? '100%' : cols === 2 ? '50%' : '33.33%' }}
           />
         ))}
       </div>
-      <span className="text-[12px] font-semibold text-gray-500 group-hover:text-indigo-600">
+      <span className="text-[11px] font-semibold text-gray-500 group-hover:text-emerald-600">
         {cols}-Column
       </span>
     </button>
@@ -64,26 +64,27 @@ function FieldCard({ field, onClick }: { field: FieldTemplate; onClick: () => vo
       {...attributes}
       onClick={onClick}
       className={`
-        relative flex flex-col items-center justify-center gap-2.5 p-3 rounded-2xl border border-gray-100 bg-white
-        cursor-grab active:cursor-grabbing select-none transition-all duration-200 group shadow-sm hover:shadow-md hover:border-indigo-300
-        h-[105px]
+        relative flex flex-col items-center justify-center gap-1.5 p-1.5 rounded-lg border border-gray-200 bg-white
+        cursor-grab active:cursor-grabbing select-none transition-all duration-200 group shadow-sm hover:shadow-md hover:border-emerald-300 hover:bg-emerald-50/10
+        h-[72px]
         ${isDragging ? 'opacity-30' : ''}
       `}
     >
       <div
-        className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+        className="w-7 h-7 rounded flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
         style={{ background: meta.bg }}
       >
-        <Icon size={20} style={{ color: meta.color }} strokeWidth={2} />
+        <Icon size={14} style={{ color: meta.color }} strokeWidth={2} />
       </div>
 
-      <span className="text-[13px] font-semibold text-gray-600 group-hover:text-gray-900 text-center leading-tight">
+      <span className="text-[11px] font-medium text-gray-600 group-hover:text-gray-900 text-center leading-tight">
         {field.label}
       </span>
 
       {field.isNew && (
         <span
-          className="absolute top-2 right-2 text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase bg-blue-100 text-blue-600 tracking-tighter"
+          className="absolute top-1 right-1 font-bold px-1 py-[2px] rounded-sm uppercase bg-emerald-100 text-emerald-700 tracking-tighter leading-none"
+          style={{ fontSize: '7px' }}
         >
           New
         </span>
@@ -104,14 +105,14 @@ function CategorySection({
 }) {
 
   return (
-    <div className="mb-8">
-      <div className="px-1 mb-4">
-        <span className="text-[15px] font-bold text-slate-800">
+    <div className="mb-6">
+      <div className="px-1 mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-400">
           {category}
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-2 gap-2.5">
         {fields.map(f => (
           <FieldCard key={f.id} field={f} onClick={() => onAddField(f.type)} />
         ))}
@@ -162,13 +163,13 @@ export default function FieldSidebar({ onAddGridRow, onAddField }: FieldSidebarP
         {/* Search */}
         <div className="px-4 py-4 shrink-0 bg-white border-b border-gray-100">
           <div className="relative group">
-            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 transition-colors pointer-events-none" />
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-emerald-500 transition-colors pointer-events-none" />
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search"
-              className="w-full pl-11 pr-9 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-[14px] text-gray-700 placeholder:text-gray-400 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white transition-all shadow-sm"
+              className="w-full pl-11 pr-9 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-[14px] text-gray-700 placeholder:text-gray-400 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 focus:bg-white transition-all shadow-sm"
             />
             {search && (
               <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
@@ -179,13 +180,12 @@ export default function FieldSidebar({ onAddGridRow, onAddField }: FieldSidebarP
         </div>
 
         {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 field-sidebar-scroll">
+        <div className="flex-1 overflow-y-auto px-3 py-5 field-sidebar-scroll">
 
-          {/* Grid layout pickers */}
           {!search && (
-            <div className="mb-8">
-              <p className="px-1 mb-3 text-[14px] font-semibold text-gray-800">Grid</p>
-              <div className="grid grid-cols-3 gap-2.5">
+            <div className="mb-6">
+              <p className="px-1 mb-2.5 text-[12px] font-semibold text-gray-800">Grid</p>
+              <div className="grid grid-cols-3 gap-2">
                 {([1, 2, 3] as const).map(n => (
                   <GridCard key={n} cols={n} onClick={() => onAddGridRow(n)} />
                 ))}
@@ -195,13 +195,13 @@ export default function FieldSidebar({ onAddGridRow, onAddField }: FieldSidebarP
 
           {/* Smart Scan */}
           {(!search || 'smart scan'.includes(search.toLowerCase())) && (
-            <div className="mb-8 px-1">
+            <div className="mb-6 px-1">
               <button
                 onClick={() => setShowSmartScan(true)}
-                className="w-full flex items-center justify-center gap-2.5 px-4 py-3.5 rounded-2xl border-2 border-dashed border-purple-200 bg-purple-50/50 hover:bg-purple-50 hover:border-purple-300 transition-all duration-200 group shadow-sm"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-dashed border-purple-300 bg-purple-50/50 hover:bg-purple-50 hover:border-purple-400 transition-all duration-200 group shadow-sm"
               >
-                <Icons.Sparkles size={18} className="text-purple-600 shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="text-[14px] font-bold text-purple-700">Smart Scan</span>
+                <Icons.Sparkles size={14} className="text-purple-600 shrink-0 group-hover:scale-110 transition-transform" />
+                <span className="text-[12.5px] font-bold text-purple-700">Smart Scan</span>
               </button>
             </div>
           )}

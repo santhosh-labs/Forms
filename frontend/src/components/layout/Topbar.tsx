@@ -80,9 +80,9 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
         style={{ width: searchFocused ? 260 : 180 }}
       >
         <Search
-          size={13}
+          size={14}
           className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none transition-colors"
-          style={{ color: searchFocused ? '#6366f1' : '#94a3b8' }}
+          style={{ color: searchFocused ? '#10b981' : '#94a3b8' }}
         />
         <input
           type="text"
@@ -93,20 +93,20 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
           onBlur={() => setSearchFocused(false)}
           className="w-full outline-none transition-all duration-200"
           style={{
-            height: 34,
+            height: 36,
             paddingLeft: 34,
             paddingRight: 36,
-            fontSize: 12.5,
+            fontSize: 13,
             borderRadius: 8,
-            background: searchFocused ? '#fff' : '#f8fafc',
-            border: searchFocused ? '1.5px solid #6366f1' : '1.5px solid #e2e8f0',
-            color: '#0f172a',
-            boxShadow: searchFocused ? '0 0 0 3px rgba(99,102,241,0.1)' : 'none',
+            background: searchFocused ? '#ffffff' : '#f8fafc',
+            border: searchFocused ? '1.5px solid #10b981' : '1.5px solid #e2e8f0',
+            color: '#1e293b',
+            boxShadow: searchFocused ? '0 0 0 3px rgba(16,185,129,0.1)' : 'none',
           }}
         />
         <kbd
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 hidden sm:flex items-center text-[10px] font-medium"
-          style={{ color: '#94a3b8', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '1px 5px' }}
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 hidden sm:flex items-center text-[10px] font-bold"
+          style={{ color: '#94a3b8', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '2px 5px' }}
         >
           ⌘K
         </kbd>
@@ -115,7 +115,7 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
       {onNewFormClick && (
         <button
           onClick={onNewFormClick}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#6366f1] text-white text-[12.5px] font-semibold rounded-lg hover:bg-[#4f46e5] transition-colors shadow-sm ml-2"
+          className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 bg-[#10b981] text-white text-[13px] font-bold rounded-lg hover:bg-[#059669] transition-colors shadow-sm ml-2"
         >
           <Sparkles size={14} />
           New Form
@@ -133,17 +133,17 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
           <Bell size={16} />
         </IBtn>
         <span
-          className="absolute top-1 right-1 rounded-full pointer-events-none"
-          style={{ width: 6, height: 6, background: '#6366f1', boxShadow: '0 0 5px rgba(99,102,241,0.7)' }}
+          className="absolute top-1 right-1 rounded-full pointer-events-none border border-white"
+          style={{ width: 8, height: 8, background: '#ef4444', boxShadow: '0 0 5px rgba(239,68,68,0.4)' }}
         />
         {showNotif && (
           <div
             className="absolute right-0 top-full mt-2 w-72 rounded-xl overflow-hidden"
             style={{ background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 8px 32px rgba(15,23,42,0.12)', zIndex: 50 }}
           >
-            <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #f1f5f9' }}>
-              <p style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>Notifications</p>
-              <span style={{ fontSize: 10, fontWeight: 700, background: 'rgba(99,102,241,0.1)', color: '#6366f1', padding: '2px 8px', borderRadius: 99 }}>3 new</span>
+            <div className="flex items-center justify-between px-4 py-3 bg-gray-50/50" style={{ borderBottom: '1px solid #e2e8f0' }}>
+              <p style={{ fontSize: 13.5, fontWeight: 700, color: '#1e293b' }}>Notifications</p>
+              <span style={{ fontSize: 10, fontWeight: 700, background: '#ecfdf5', color: '#059669', padding: '2px 8px', borderRadius: 99, border: '1px solid #a7f3d0' }}>3 new</span>
             </div>
             {[
               { title: 'Form submitted', desc: 'Contact Us received a new response', time: '2m ago' },
@@ -158,17 +158,17 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
               >
                 <div className="flex items-start gap-2">
-                  <span className="mt-1.5 rounded-full shrink-0" style={{ width: 6, height: 6, background: '#6366f1' }} />
+                  <span className="mt-1.5 rounded-full shrink-0" style={{ width: 6, height: 6, background: '#10b981' }} />
                   <div>
-                    <p style={{ fontSize: 12.5, fontWeight: 600, color: '#0f172a' }}>{n.title}</p>
-                    <p style={{ fontSize: 11.5, color: '#64748b', marginTop: 2 }}>{n.desc}</p>
-                    <p style={{ fontSize: 10.5, color: '#94a3b8', marginTop: 3 }}>{n.time}</p>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: '#1e293b' }}>{n.title}</p>
+                    <p style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{n.desc}</p>
+                    <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 3 }}>{n.time}</p>
                   </div>
                 </div>
               </div>
             ))}
-            <div className="px-4 py-2.5 text-center">
-              <button style={{ fontSize: 12, color: '#6366f1', fontWeight: 500 }}>View all notifications →</button>
+            <div className="px-4 py-3 bg-gray-50/50 text-center border-t border-[#e2e8f0]">
+              <button style={{ fontSize: 12.5, color: '#10b981', fontWeight: 600 }}>View all notifications →</button>
             </div>
           </div>
         )}
@@ -181,47 +181,47 @@ export default function Topbar({ onMenuClick, onNewFormClick }: TopbarProps) {
       <div className="relative" ref={userRef}>
         <button
           onClick={() => setShowUser(v => !v)}
-          className="flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all duration-150"
+          className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-all duration-150"
           style={{ background: showUser ? '#f1f5f9' : 'transparent', border: '1px solid transparent' }}
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#f8fafc'; (e.currentTarget as HTMLElement).style.border = '1px solid #e2e8f0'; }}
           onMouseLeave={e => { if (!showUser) { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.border = '1px solid transparent'; } }}
         >
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0"
-            style={{ background: 'linear-gradient(135deg,#3B82F6,#6366F1)' }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-bold shrink-0 shadow-sm"
+            style={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
           >
             H
           </div>
           <div className="hidden sm:block text-left">
-            <p style={{ fontSize: 12, fontWeight: 600, color: '#0f172a', lineHeight: '1.2' }}>Hemanth</p>
-            <p style={{ fontSize: 10, color: '#94a3b8', lineHeight: '1.2' }}>Free Plan</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: '#1e293b', lineHeight: '1.2' }}>Hemanth</p>
+            <p style={{ fontSize: 11, color: '#94a3b8', lineHeight: '1.2' }}>Enterprise Plan</p>
           </div>
           <ChevronDown
-            size={11}
-            className={`hidden sm:block transition-transform duration-200 ${showUser ? 'rotate-180' : ''}`}
+            size={12}
+            className={`hidden sm:block transition-transform duration-200 ml-1 ${showUser ? 'rotate-180' : ''}`}
             style={{ color: '#94a3b8' }}
           />
         </button>
 
         {showUser && (
           <div
-            className="absolute right-0 top-full mt-2 w-52 rounded-xl overflow-hidden"
+            className="absolute right-0 top-full mt-2 w-60 rounded-xl overflow-hidden"
             style={{ background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 8px 32px rgba(15,23,42,0.12)', zIndex: 50 }}
           >
-            <div className="px-4 py-3.5" style={{ borderBottom: '1px solid #f1f5f9' }}>
+            <div className="px-5 py-4 bg-gray-50/50" style={{ borderBottom: '1px solid #e2e8f0' }}>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                  style={{ background: 'linear-gradient(135deg,#3B82F6,#6366F1)' }}>H</div>
+                <div className="w-11 h-11 rounded-full flex items-center justify-center text-white text-md font-bold shrink-0 shadow-sm"
+                  style={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}>H</div>
                 <div>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>Hemanth</p>
-                  <p style={{ fontSize: 11, color: '#64748b', marginTop: 1 }}>hemanth@formflow.io</p>
+                  <p style={{ fontSize: 14.5, fontWeight: 700, color: '#1e293b' }}>Hemanth</p>
+                  <p style={{ fontSize: 12, color: '#64748b', marginTop: 1 }}>hemanth@formflow.io</p>
                 </div>
               </div>
               <span
-                className="inline-flex items-center mt-2.5 px-2 py-0.5 rounded-full"
-                style={{ fontSize: 9.5, fontWeight: 700, background: 'rgba(99,102,241,0.08)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.2)' }}
+                className="inline-flex items-center mt-3.5 px-3 py-1 rounded-full shadow-sm"
+                style={{ fontSize: 10, fontWeight: 700, background: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}
               >
-                Free Plan
+                Enterprise Plan
               </span>
             </div>
             <div className="py-1">

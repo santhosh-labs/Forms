@@ -161,8 +161,8 @@ function FieldPreview({ field }: { field: FormField }) {
     case 'yes_no':
       return (
         <div className="flex gap-2">
-          <button disabled className="px-4 py-1.5 border-2 border-teal-400 text-teal-600 rounded-lg text-sm">Yes</button>
-          <button disabled className="px-4 py-1.5 border-2 border-gray-200 text-gray-400 rounded-lg text-sm">No</button>
+          <button disabled className="px-4 py-1.5 border-2 border-emerald-400 text-emerald-600 rounded-lg text-sm font-semibold">Yes</button>
+          <button disabled className="px-4 py-1.5 border-2 border-gray-200 text-gray-400 rounded-lg text-sm font-semibold">No</button>
         </div>
       );
 
@@ -193,8 +193,8 @@ function FieldPreview({ field }: { field: FormField }) {
       const UpIcon = field.type === 'image_upload' ? Icons.ImageUp : field.type === 'audio_video_upload' ? Icons.VideoIcon : Icons.FileUp;
       return (
         <div className="border-2 border-dashed border-gray-200 rounded-lg p-3 text-center bg-gray-50 flex flex-col items-center gap-1.5">
-          <UpIcon size={18} className="text-teal-400" strokeWidth={1.5} />
-          <p className="text-xs text-gray-400">Click to upload or drag and drop</p>
+          <UpIcon size={18} className="text-emerald-400" strokeWidth={1.5} />
+          <p className="text-xs font-medium text-gray-400">Click to upload or drag and drop</p>
         </div>
       );
     }
@@ -216,7 +216,7 @@ function FieldPreview({ field }: { field: FormField }) {
       );
 
     case 'instructions':
-      return <div className="p-3 bg-teal-50 border border-teal-100 rounded-lg text-sm text-gray-600">{field.helpText || 'Instructions text'}</div>;
+      return <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600 font-medium">{field.helpText || 'Instructions text'}</div>;
 
     default:
       return <InputWithIcon type={field.type as FieldType} placeholder="Enter value" />;
@@ -247,26 +247,26 @@ function SlotFieldCard({
     return (
       <div
         onClick={onClick}
-        className={`rounded-xl border cursor-pointer transition-all bg-white relative overflow-hidden ${isSelected ? 'border-blue-400 ring-2 ring-blue-200' : 'border-gray-200 hover:border-gray-300'
+        className={`rounded-xl border cursor-pointer transition-all bg-white relative overflow-hidden ${isSelected ? 'border-emerald-400 ring-4 ring-emerald-50' : 'border-slate-200 hover:border-slate-300'
           }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-3 py-2.5 bg-blue-50/50 border-b border-blue-100">
+        <div className="flex items-center justify-between px-3 py-2.5 bg-slate-50 border-b border-slate-100">
           <div className="flex items-center gap-1.5">
-            <LayoutTemplate size={14} className="text-blue-500" strokeWidth={2} />
+            <LayoutTemplate size={14} className="text-slate-500" strokeWidth={2} />
             <p className="text-[12.5px] font-bold text-slate-800 leading-none">
               {field.label || 'Subform'}
               {field.required && <span className="text-red-500 ml-0.5">*</span>}
             </p>
             {(field.subFields?.length ?? 0) > 0 && (
-              <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-1.5 py-[1px] rounded-full shrink-0">
+              <span className="text-[10px] bg-slate-200 text-slate-700 font-bold px-1.5 py-[1px] rounded-full shrink-0">
                 {field.subFields!.length} field{field.subFields!.length !== 1 ? 's' : ''}
               </span>
             )}
           </div>
           <button
             onClick={e => { e.stopPropagation(); setCollapsed(c => !c); }}
-            className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-100/50 rounded transition-colors"
+            className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded transition-colors"
             title={collapsed ? 'Expand subform' : 'Collapse subform'}
           >
             {collapsed ? <Maximize size={13} /> : <Minimize size={13} />}
@@ -291,7 +291,7 @@ function SlotFieldCard({
   return (
     <div
       onClick={onClick}
-      className={`rounded-lg border cursor-pointer transition-all p-3 bg-white ${isSelected ? 'border-blue-400 ring-2 ring-blue-200' : 'border-gray-200 hover:border-gray-300'
+      className={`rounded-xl border cursor-pointer transition-all p-3.5 bg-white ${isSelected ? 'border-emerald-400 ring-4 ring-emerald-50' : 'border-slate-200 hover:border-slate-300'
         }`}
     >
       {/* Label row with icon */}
@@ -352,16 +352,16 @@ function ColumnSlot({
     <div
       ref={setNodeRef}
       className={`
-        flex-1 min-h-[90px] rounded-lg border-2 border-dashed flex flex-col items-center justify-center
+        flex-1 min-h-[90px] rounded-xl border-2 border-dashed flex flex-col items-center justify-center
         transition-all duration-150 cursor-default select-none
         ${isOver
-          ? 'border-teal-400 bg-teal-50/60 text-teal-500'
-          : 'border-gray-300 bg-white text-gray-400 hover:border-teal-300 hover:bg-teal-50/20'
+          ? 'border-emerald-400 bg-emerald-50/60 text-emerald-600'
+          : 'border-slate-300 bg-white text-slate-400 hover:border-emerald-300 hover:bg-emerald-50/30'
         }
       `}
     >
-      <p className="text-[11.5px] text-center px-3 leading-relaxed">
-        <span className={isOver ? 'text-teal-500 font-medium' : 'text-gray-400'}>
+      <p className="text-[12px] text-center px-4 leading-relaxed font-medium">
+        <span className={isOver ? 'text-emerald-600' : 'text-slate-400'}>
           Drag and drop fields here
         </span>
       </p>
@@ -389,14 +389,14 @@ function GridRowCard({
 
 
   return (
-    <div className="relative rounded-r-xl overflow-hidden border border-l-0 border-gray-200 shadow-sm group">
-      {/* Teal accent left border */}
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-teal-400" />
+    <div className="relative rounded-xl overflow-hidden border border-slate-200 shadow-sm group">
+      {/* Emerald accent left border */}
+      <div className="absolute left-0 top-0 bottom-0 w-[5px] bg-emerald-400 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity" />
 
       {/* Row header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-100 ml-1">
+      <div className="flex items-center justify-between px-4 py-2 bg-slate-50 border-b border-slate-100 pl-4">
         <div className="flex items-center gap-2">
-          <GripVertical size={13} className="text-gray-300" />
+          <GripVertical size={14} className="text-slate-300" />
         </div>
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
@@ -475,24 +475,24 @@ export default function FormCanvas({
       <div
         ref={setNodeRef}
         className={`
-          max-w-5xl mx-auto bg-white rounded-2xl min-h-[560px] transition-all duration-200
+          max-w-4xl mx-auto bg-white rounded-2xl min-h-[560px] transition-all duration-200 mb-12
           ${isOver && isEmpty
-            ? 'ring-2 ring-blue-400 ring-offset-4 ring-offset-[#F8FAFC] shadow-xl'
-            : 'shadow-[0_2px_16px_rgba(15,23,42,0.08)] border border-white'
+            ? 'ring-4 ring-emerald-400 ring-offset-4 ring-offset-[#F8FAFC] shadow-2xl'
+            : 'shadow-[0_8px_32px_rgba(15,23,42,0.06)] border border-slate-100'
           }
         `}
       >
         {/* Card header */}
-        <div className="flex items-center justify-between px-6 py-3.5 border-b border-gray-100 rounded-t-2xl">
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
+          <div className="flex items-center gap-3">
+            <div className="flex gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-slate-200" />
+              <span className="w-3 h-3 rounded-full bg-slate-200" />
+              <span className="w-3 h-3 rounded-full bg-slate-200" />
             </div>
-            <span className="text-[11.5px] font-semibold text-gray-400 ml-1 tracking-wide">Form Preview</span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Form Preview</span>
           </div>
-          <span className="text-[11px] text-gray-400 tabular-nums font-medium">
+          <span className="text-[12px] text-slate-400 font-bold bg-white px-2.5 py-1 rounded-md border border-slate-100 shadow-sm">
             {gridRows.length} {gridRows.length === 1 ? 'row' : 'rows'}
           </span>
         </div>
@@ -510,9 +510,9 @@ export default function FormCanvas({
                   <div className="relative flex justify-center">
                     <button
                       onClick={() => onWelcomePageUpdate({ enabled: true })}
-                      className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full border border-[#10b981] bg-white text-[13px] font-medium text-[#059669] hover:bg-teal-50 shadow-sm transition-colors"
+                      className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full border border-emerald-500 bg-white text-[13px] font-bold text-emerald-600 hover:bg-emerald-50 hover:shadow-md transition-all shadow-sm"
                     >
-                      <Plus size={14} /> Welcome Page
+                      <Plus size={15} strokeWidth={2.5} /> Welcome Page
                     </button>
                   </div>
                 </div>
@@ -641,9 +641,9 @@ export default function FormCanvas({
                 h-12 rounded-xl border-2 border-dashed flex items-center justify-center
                 transition-all duration-200
                 ${isOver ? 'border-teal-300 bg-teal-50/30 text-teal-500' : 'border-gray-100 text-gray-300'}
-              `}>
-                <span className="text-[11.5px] font-medium">
-                  {isOver ? '↓ Drop here to add a row' : 'Drag a field here, or click 2/3-Column for layouts'}
+                `}>
+                <span className="text-[12px] font-bold uppercase tracking-wider">
+                  {isOver ? '↓ Drop here to add a row' : 'Drag a field here, or click 2/3-Column'}
                 </span>
               </div>
             </div>
