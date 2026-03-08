@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FormField, GridRow, GridSlot, FieldType, WelcomePageConfig } from '../../types';
 import { useDroppable } from '@dnd-kit/core';
-import { Trash2, ChevronDown, ChevronUp, Star, GripVertical, FileText, LayoutTemplate, Minimize, Maximize, Plus, Image as ImageIcon, Video, UploadCloud, X } from 'lucide-react';
+import { Trash2, ChevronDown, ChevronUp, Star, GripVertical, FileText, LayoutTemplate, Minimize, Maximize, Plus, Image as ImageIcon, Video, UploadCloud } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { fieldTemplates } from '../../data/mockData';
 import SubformCanvas from './SubformCanvas';
