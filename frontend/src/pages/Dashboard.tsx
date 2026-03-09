@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SlidersHorizontal, ChevronDown, FileText, Sparkles } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
 import FormCard from '../components/dashboard/FormCard';
@@ -8,7 +8,18 @@ import { useFormStore } from '../store/useFormStore';
 export default function Dashboard() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const allForms = useFormStore((state) => state.forms);
-  const forms = allForms.filter(f => !f.isDeleted);
+  const allFolders = useFormStore((state) => state.folders);
+
+  const forms = useMemo(() => {
+    const sharedFolderNames = [
+      'HR Onboarding', 'Marketing Campaigns',
+      ...allFolders.filter(f => f.sharedBy).map(f => f.name)
+    ];
+    return allForms.filter(f => !f.isDeleted).filter(f => {
+      const isShared = f.folder && sharedFolderNames.includes(f.folder);
+      return !isShared;
+    });
+  }, [allForms, allFolders]);
 
   return (
     <MainLayout onNewFormClick={() => setShowCreateModal(true)}>

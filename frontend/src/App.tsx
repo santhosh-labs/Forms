@@ -11,19 +11,22 @@ import UserManagement from './pages/UserManagement';
 import MyFolders from './pages/MyFolders';
 import SharedFolders from './pages/SharedFolders';
 import OrgForms from './pages/OrgForms';
+import SharedForms from './pages/SharedForms';
 import MyApprovals from './pages/MyApprovals';
-import { Users, BarChart3, SlidersHorizontal } from 'lucide-react';
+import { BarChart3, SlidersHorizontal } from 'lucide-react';
 import { useEffect } from 'react';
 import { useFormStore } from './store/useFormStore';
 
 function AppBootstrap({ children }: { children: React.ReactNode }) {
   const loadForms = useFormStore(s => s.loadForms);
   const loadFolders = useFormStore(s => s.loadFolders);
+  const loadAllSubmissions = useFormStore(s => s.loadAllSubmissions);
 
   useEffect(() => {
-    loadForms();
+    // Load forms first, then all submissions in parallel
+    loadForms().then(() => loadAllSubmissions());
     loadFolders();
-  }, [loadForms, loadFolders]);
+  }, [loadForms, loadFolders, loadAllSubmissions]);
 
   return <>{children}</>;
 }
@@ -34,7 +37,7 @@ function App() {
       <AppBootstrap>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/shared-forms" element={<FeaturePage title="Shared Forms" description="Forms shared with you by other users will appear here." icon={Users} />} />
+          <Route path="/shared-forms" element={<SharedForms />} />
           <Route path="/org-forms" element={<OrgForms />} />
 
           <Route path="/builder/:id" element={<FormBuilder />} />
@@ -42,6 +45,7 @@ function App() {
           <Route path="/form/:id" element={<FormRenderer />} />
 
           <Route path="/reports" element={<MyReports />} />
+          <Route path="/reports/:reportId" element={<MyReports />} />
           <Route path="/shared-reports" element={<FeaturePage title="Shared Reports" description="Reports shared with you by other users will appear here." icon={BarChart3} />} />
           <Route path="/folders" element={<MyFolders />} />
           <Route path="/shared-folders" element={<SharedFolders />} />

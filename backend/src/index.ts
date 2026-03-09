@@ -17,6 +17,44 @@ app.use(express.json({ limit: '50mb' }));
 // FORMS
 // ──────────────────────────────────────────────────────────
 
+// Helper: serialize a full field object into DB columns
+function fieldToDb(f: any) {
+    const { id: _id, type, label, placeholder, helpText, required, position, subFields, options, ...rest } = f;
+    return {
+        type,
+        label,
+        placeholder: placeholder ?? null,
+        helpText: helpText ?? null,
+        required: required ?? false,
+        position: position ?? 0,
+        subFields: subFields ?? null,
+        // Store the FULL field object so all custom properties survive refresh
+        options: { choices: options, ...rest, _full: f },
+    };
+}
+
+// Helper: restore full field from DB row
+function fieldFromDb(f: any) {
+    const stored = f.options as Record<string, any> | null;
+    if (stored?._full) {
+        // Merge DB‐authoritative columns on top of stored full object
+        return {
+            ...stored._full,
+            id: f.id,
+            type: f.type,
+            label: f.label,
+            placeholder: f.placeholder,
+            helpText: f.helpText,
+            required: f.required,
+            position: f.position,
+            subFields: f.subFields,
+            options: stored.choices,
+        };
+    }
+    // Legacy row - return as-is
+    return { ...f, options: stored?.choices ?? stored };
+}
+
 // GET /api/forms - All non-deleted forms
 app.get('/api/forms', async (_req, res) => {
     const forms = await prisma.form.findMany({
@@ -24,7 +62,7 @@ app.get('/api/forms', async (_req, res) => {
         include: { fields: { orderBy: { position: 'asc' } }, gridRows: true },
         orderBy: { createdAt: 'desc' },
     });
-    res.json(forms);
+    res.json(forms.map(f => ({ ...f, fields: f.fields.map(fieldFromDb) })));
 });
 
 // GET /api/forms/trash - Deleted forms
@@ -33,7 +71,7 @@ app.get('/api/forms/trash', async (_req, res) => {
         where: { isDeleted: true },
         include: { fields: true },
     });
-    res.json(forms);
+    res.json(forms.map(f => ({ ...f, fields: f.fields.map(fieldFromDb) })));
 });
 
 // GET /api/forms/:id - Single form
@@ -43,7 +81,7 @@ app.get('/api/forms/:id', async (req, res) => {
         include: { fields: { orderBy: { position: 'asc' } }, gridRows: true },
     });
     if (!form) return res.status(404).json({ error: 'Not found' });
-    res.json(form);
+    res.json({ ...form, fields: form.fields.map(fieldFromDb) });
 });
 
 // POST /api/forms - Create form
@@ -57,18 +95,7 @@ app.post('/api/forms', async (req, res) => {
             theme,
             rules,
             folderId,
-            fields: {
-                create: (fields || []).map((f: any) => ({
-                    type: f.type,
-                    label: f.label,
-                    placeholder: f.placeholder,
-                    helpText: f.helpText,
-                    required: f.required ?? false,
-                    options: f.options,
-                    position: f.position ?? 0,
-                    subFields: f.subFields,
-                })),
-            },
+            fields: { create: (fields || []).map(fieldToDb) },
             gridRows: {
                 create: (gridRows || []).map((r: any) => ({
                     columns: r.columns,
@@ -78,7 +105,7 @@ app.post('/api/forms', async (req, res) => {
         },
         include: { fields: true, gridRows: true },
     });
-    res.status(201).json(form);
+    res.status(201).json({ ...form, fields: form.fields.map(fieldFromDb) });
 });
 
 // PATCH /api/forms/:id - Update form metadata
@@ -104,13 +131,7 @@ app.patch('/api/forms/:id/fields', async (req, res) => {
     const form = await prisma.form.update({
         where: { id: req.params.id },
         data: {
-            fields: {
-                create: (fields || []).map((f: any) => ({
-                    type: f.type, label: f.label, placeholder: f.placeholder,
-                    helpText: f.helpText, required: f.required ?? false,
-                    options: f.options, position: f.position ?? 0, subFields: f.subFields,
-                })),
-            },
+            fields: { create: (fields || []).map(fieldToDb) },
             gridRows: {
                 create: (gridRows || []).map((r: any) => ({
                     columns: r.columns, slots: r.slots,
@@ -119,7 +140,7 @@ app.patch('/api/forms/:id/fields', async (req, res) => {
         },
         include: { fields: { orderBy: { position: 'asc' } }, gridRows: true },
     });
-    res.json(form);
+    res.json({ ...form, fields: form.fields.map(fieldFromDb) });
 });
 
 // DELETE /api/forms/:id - Soft delete
@@ -212,6 +233,31 @@ app.delete('/api/folders/:id', async (req, res) => {
 });
 
 // ──────────────────────────────────────────────────────────
+// REPORTS
+// ──────────────────────────────────────────────────────────
+
+// GET /api/reports
+app.get('/api/reports', async (_req, res) => {
+    const reports = await prisma.report.findMany({ orderBy: { createdAt: 'desc' } });
+    res.json(reports);
+});
+
+// POST /api/reports
+app.post('/api/reports', async (req, res) => {
+    const { name, formId, formName, type } = req.body;
+    const report = await prisma.report.create({
+        data: { name, formId, formName, type: type || 'Summary' },
+    });
+    res.status(201).json(report);
+});
+
+// DELETE /api/reports/:id
+app.delete('/api/reports/:id', async (req, res) => {
+    await prisma.report.delete({ where: { id: req.params.id } });
+    res.json({ success: true });
+});
+
+// ──────────────────────────────────────────────────────────
 // HEALTH CHECK
 // ──────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
@@ -221,5 +267,4 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     console.error('Unhandled Server Error:', err);
     res.status(500).json({ error: err.message || 'Internal Server Error', details: err });
 });
-
 app.listen(PORT, () => console.log(`✅ FormFlow API running on http://localhost:${PORT}`));

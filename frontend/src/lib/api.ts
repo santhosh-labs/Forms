@@ -38,4 +38,10 @@ export const api = {
     updateFolder: (id: string, data: Partial<FolderItem>) =>
         req<FolderItem>(`/folders/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     deleteFolder: (id: string) => req<void>(`/folders/${id}`, { method: 'DELETE' }),
+
+    // Reports
+    getReports: () => req<{ id: string; name: string; formId: string; formName: string; type: string; createdAt: string }[]>('/reports'),
+    createReport: (data: { name: string; formId: string; formName: string; type: string }) =>
+        req<{ id: string; name: string; formId: string; formName: string; type: string; createdAt: string }>('/reports', { method: 'POST', body: JSON.stringify(data) }),
+    deleteReport: (id: string) => req<void>(`/reports/${id}`, { method: 'DELETE' }),
 };

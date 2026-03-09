@@ -4,7 +4,8 @@ import {
   FileText, MoreHorizontal, Info, Copy, FolderInput,
   LayoutGrid, Trash2, X, Calendar, Hash, Layers,
   CheckCircle, AlertCircle, Folder, Check, Plus,
-  Pencil, Mail, Share2, Clipboard, Eye, UserPlus, List
+  Pencil, Mail, Share2, Clipboard, Eye, UserPlus, List,
+  Link2, Users, UsersRound, Building2, ChevronDown, ExternalLink, Search
 } from 'lucide-react';
 import { Form } from '../../types';
 import { useFormStore } from '../../store/useFormStore';
@@ -203,6 +204,222 @@ function ChangeOwnershipModal({ form, onClose, onTransfer }: {
   );
 }
 
+/* ─── Quick Share Modal ──────────────────────────────────────── */
+type ShareWith = 'specific' | 'groups' | 'all';
+type Permission = 'submit' | 'modify' | 'modify_all';
+
+const SHARE_WITH_OPTIONS: { value: ShareWith; label: string; icon: React.ReactNode; desc: string }[] = [
+  { value: 'specific', label: 'Specific Users', icon: <Users size={14} />, desc: 'Share the form with users within your organization and manage form-specific permissions.' },
+  { value: 'groups', label: 'Groups', icon: <UsersRound size={14} />, desc: 'Share the form with groups in your organization. Group members can view and submit the form.' },
+  { value: 'all', label: 'All Users', icon: <Building2 size={14} />, desc: 'Share this form with all users in your organization.' },
+];
+
+const PERMISSION_OPTIONS: { value: Permission; label: string; desc: string }[] = [
+  { value: 'submit', label: 'Submit Form', desc: 'View & submit form' },
+  { value: 'modify', label: 'Modify Form', desc: 'Modify form & configurations, Submit form' },
+  { value: 'modify_all', label: 'Modify Form, Entries, Reports', desc: 'All permissions given under Modify Form + Edit entries, Create & modify reports' },
+];
+
+function QuickShareModal({ form, onClose }: { form: Form; onClose: () => void }) {
+  const [shareWith, setShareWith] = useState<ShareWith>('specific');
+  const [permission, setPermission] = useState<Permission>('submit');
+  const [email, setEmail] = useState('');
+  const [sharedUsers, setSharedUsers] = useState<{ email: string; permission: Permission }[]>([]);
+  const [showShareWithDrop, setShowShareWithDrop] = useState(false);
+  const [showPermDrop, setShowPermDrop] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const permalink = `${window.location.origin}/form/${form.id}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(permalink).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  const handleShare = () => {
+    const trimmed = email.trim();
+    if (!trimmed || !/\S+@\S+\.\S+/.test(trimmed)) return;
+    if (!sharedUsers.find(u => u.email === trimmed)) {
+      setSharedUsers(prev => [...prev, { email: trimmed, permission }]);
+    }
+    setEmail('');
+  };
+
+  const selectedShareWith = SHARE_WITH_OPTIONS.find(o => o.value === shareWith)!;
+  const selectedPerm = PERMISSION_OPTIONS.find(o => o.value === permission)!;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      style={{ backgroundColor: 'rgba(15,23,42,0.55)' }}
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg"
+        style={{ boxShadow: '0 24px 64px rgba(0,0,0,0.22)', overflow: 'visible' }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-start justify-between px-6 pt-5 pb-0">
+          <div>
+            <h2 className="text-[17px] font-bold text-gray-900">Quick Share</h2>
+            <div className="flex items-center gap-1.5 mt-1 text-[12px] text-gray-500">
+              <FileText size={12} className="text-gray-400" />
+              <span className="font-medium text-gray-600">{form.name}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-gray-300 text-[12.5px] font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <Link2 size={13} className="text-emerald-500" />
+              {copied ? 'Copied!' : 'Copy Permalink'}
+            </button>
+            <button
+              onClick={onClose}
+              className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-100 mt-4 mb-0" />
+
+        {/* Body */}
+        <div className="px-6 py-5 space-y-4">
+
+          {/* Share With */}
+          <div className="flex items-center gap-3">
+            <span className="text-[13px] font-semibold text-gray-600 shrink-0 w-20">Share With</span>
+            <div className="relative">
+              <button
+                onClick={() => { setShowShareWithDrop(v => !v); setShowPermDrop(false); }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-gray-300 hover:bg-gray-50 transition-all"
+              >
+                <span className="text-emerald-600">{selectedShareWith.icon}</span>
+                {selectedShareWith.label}
+                <ChevronDown size={13} className={`text-gray-400 transition-transform ${showShareWithDrop ? 'rotate-180' : ''}`} />
+              </button>
+              {showShareWithDrop && (
+                <>
+                  <div className="fixed inset-0 z-[60]" onClick={() => setShowShareWithDrop(false)} />
+                  <div className="absolute left-0 top-full mt-1 w-72 bg-white rounded-xl border border-gray-100 py-1.5 z-[61]" style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.18)' }}>
+                    {SHARE_WITH_OPTIONS.map(opt => (
+                      <button
+                        key={opt.value}
+                        onClick={() => { setShareWith(opt.value); setShowShareWithDrop(false); }}
+                        className={`w-full flex items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-50 ${shareWith === opt.value ? 'bg-emerald-50' : ''}`}
+                      >
+                        <span className={`mt-0.5 shrink-0 ${shareWith === opt.value ? 'text-emerald-600' : 'text-gray-400'}`}>{opt.icon}</span>
+                        <div>
+                          <p className={`text-[13px] font-semibold ${shareWith === opt.value ? 'text-emerald-700' : 'text-gray-800'}`}>{opt.label}</p>
+                          <p className="text-[11.5px] text-gray-500 leading-snug mt-0.5">{opt.desc}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Email + Permission + Share button */}
+          <div className="flex items-center gap-2">
+            {/* Email search */}
+            <div className="relative flex-1">
+              <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleShare()}
+                placeholder="Search Email Address"
+                type="email"
+                className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-[13px] outline-none focus:ring-2 focus:ring-emerald-400/30 focus:border-emerald-400 transition-colors bg-gray-50"
+              />
+            </div>
+
+            {/* Permission dropdown */}
+            <div className="relative shrink-0">
+              <button
+                onClick={() => { setShowPermDrop(v => !v); setShowShareWithDrop(false); }}
+                className="flex flex-col items-start px-3 py-1.5 border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all min-w-[130px]"
+              >
+                <span className="text-[9.5px] text-gray-400 font-medium leading-none mb-0.5">Permission</span>
+                <div className="flex items-center gap-1">
+                  <span className="text-[12.5px] font-semibold text-gray-800">{selectedPerm.label}</span>
+                  <ChevronDown size={11} className={`text-gray-400 transition-transform ${showPermDrop ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
+              {showPermDrop && (
+                <>
+                  <div className="fixed inset-0 z-[60]" onClick={() => setShowPermDrop(false)} />
+                  <div className="absolute right-0 top-full mt-1 w-72 bg-white rounded-xl border border-gray-100 py-1.5 z-[61]" style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.18)' }}>
+                    {PERMISSION_OPTIONS.map(opt => (
+                      <button
+                        key={opt.value}
+                        onClick={() => { setPermission(opt.value); setShowPermDrop(false); }}
+                        className={`w-full flex flex-col items-start px-4 py-3 text-left hover:bg-gray-50 transition-colors ${permission === opt.value ? 'bg-emerald-50' : ''}`}
+                      >
+                        <p className={`text-[13px] font-semibold ${permission === opt.value ? 'text-emerald-700' : 'text-gray-800'}`}>{opt.label}</p>
+                        <p className="text-[11.5px] text-gray-500 mt-0.5">{opt.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Share btn */}
+            <button
+              onClick={handleShare}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white text-[13px] font-bold transition-colors shadow-sm shrink-0"
+            >
+              Share
+            </button>
+          </div>
+
+          {/* Shared users list */}
+          {sharedUsers.length > 0 && (
+            <div className="space-y-1.5 pt-1">
+              {sharedUsers.map(u => (
+                <div key={u.email} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-gray-50">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-[11px] font-bold text-emerald-700">{u.email[0].toUpperCase()}</span>
+                    </div>
+                    <div>
+                      <p className="text-[12.5px] font-medium text-gray-800">{u.email}</p>
+                      <p className="text-[11px] text-gray-400">{PERMISSION_OPTIONS.find(p => p.value === u.permission)?.label}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setSharedUsers(prev => prev.filter(x => x.email !== u.email))} className="text-gray-300 hover:text-red-400 transition-colors">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-gray-100 px-6 py-3.5 flex items-center justify-center">
+          <button
+            onClick={() => { onClose(); }}
+            className="flex items-center gap-1.5 text-[13px] font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+          >
+            More Share Options <ExternalLink size={13} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── MENU ITEM ─────────────────────────────────────────────── */
 function MenuItem({ icon, label, onClick, danger }: {
   icon: React.ReactNode; label: string; onClick: () => void; danger?: boolean
@@ -224,7 +441,7 @@ function MenuItem({ icon, label, onClick, danger }: {
 export default function FormCard({ form, viewMode = 'grid' }: FormCardProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const [modal, setModal] = useState<'info' | 'folder' | 'owner' | null>(null);
+  const [modal, setModal] = useState<'info' | 'folder' | 'owner' | 'share' | null>(null);
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -247,7 +464,8 @@ export default function FormCard({ form, viewMode = 'grid' }: FormCardProps) {
   }, [showMenu]);
 
   const handleDuplicate = () => {
-    addForm({ ...form, id: `form-${Date.now()}`, name: `${form.name} (Copy)`, createdAt: new Date().toISOString().split('T')[0], submissions: 0, isDisabled: false });
+    const { id: _id, ...rest } = form;
+    addForm({ ...rest, name: `${form.name} (Copy)`, createdAt: new Date().toISOString().split('T')[0], submissions: 0, isDisabled: false });
     close();
   };
   const handleToggleDisable = () => { updateForm(form.id, { isDisabled: !form.isDisabled }); close(); };
@@ -346,7 +564,11 @@ export default function FormCard({ form, viewMode = 'grid' }: FormCardProps) {
                   <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors" title="Email">
                     <Mail size={14} />
                   </button>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors" title="Share" onClick={() => navigate(`/builder/${form.id}`, { state: { tab: 'share' } })}>
+                  <button
+                    className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-emerald-600 hover:border-emerald-200 transition-colors"
+                    title="Quick Share"
+                    onClick={() => setModal('share')}
+                  >
                     <Share2 size={14} />
                   </button>
                 </div>
@@ -372,6 +594,7 @@ export default function FormCard({ form, viewMode = 'grid' }: FormCardProps) {
         {modal === 'info' && <InfoModal form={form} onClose={close} />}
         {modal === 'folder' && <MoveToFolderModal form={form} onClose={close} onMove={f => updateForm(form.id, { folder: f })} />}
         {modal === 'owner' && <ChangeOwnershipModal form={form} onClose={close} onTransfer={o => updateForm(form.id, { owner: o })} />}
+        {modal === 'share' && <QuickShareModal form={form} onClose={close} />}
       </>
     );
   }
@@ -449,6 +672,7 @@ export default function FormCard({ form, viewMode = 'grid' }: FormCardProps) {
       {modal === 'info' && <InfoModal form={form} onClose={close} />}
       {modal === 'folder' && <MoveToFolderModal form={form} onClose={close} onMove={f => updateForm(form.id, { folder: f })} />}
       {modal === 'owner' && <ChangeOwnershipModal form={form} onClose={close} onTransfer={o => updateForm(form.id, { owner: o })} />}
+      {modal === 'share' && <QuickShareModal form={form} onClose={close} />}
     </>
   );
 }

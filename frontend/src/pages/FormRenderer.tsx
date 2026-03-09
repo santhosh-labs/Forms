@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FormField, GridRow } from '../types';
 import { useFormStore } from '../store/useFormStore';
 import * as Icons from 'lucide-react';
-import { Star, ArrowLeft, Image as ImageIcon, MapPin, Info, UploadCloud } from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, MapPin, Info, UploadCloud } from 'lucide-react';
 
 export default function FormRenderer() {
     const { id } = useParams();
@@ -14,12 +14,20 @@ export default function FormRenderer() {
     const [formData, setFormData] = useState<Record<string, unknown>>({});
     const [submitted, setSubmitted] = useState(false);
     const [showWelcome, setShowWelcome] = useState(!!form?.welcomePage?.enabled);
+    const loading = useFormStore((state) => state.loading);
 
-    if (!form) {
+    if (!form || form.isDeleted) {
+        if (loading && !form) {
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+                </div>
+            );
+        }
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">Form not found</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-2">Form not found or in trash</h2>
                 </div>
             </div>
         );
@@ -74,7 +82,7 @@ export default function FormRenderer() {
         return isVisible;
     };
 
-    const renderRows = form.gridRows || form.fields.map((f: FormField) => ({
+    const renderRows = (form.gridRows && form.gridRows.length > 0) ? form.gridRows : form.fields.map((f: FormField) => ({
         id: `fallback-${f.id}`,
         columns: 1 as const,
         slots: [{ id: `slot-${f.id}`, field: f }]
@@ -124,7 +132,7 @@ export default function FormRenderer() {
     if (showWelcome && form.welcomePage?.enabled) {
         return (
             <div className={`min-h-screen py-8 px-4 flex flex-col items-center justify-center`} style={{ backgroundColor: theme.backgroundColor, fontFamily: theme.fontFamily, color: theme.textColor }}>
-                <div className={`max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col ${form.welcomePage.layout === 'left' ? 'md:flex-row' : ''}`}>
+                <div className={`max-w-4xl w-full bg-white text-gray-900 rounded-2xl shadow-xl overflow-hidden flex flex-col ${form.welcomePage.layout === 'left' ? 'md:flex-row' : ''}`}>
 
                     {/* Media Section */}
                     {form.welcomePage.mediaUrl && (
@@ -174,7 +182,7 @@ export default function FormRenderer() {
                     Go Back
                 </button>
                 <div
-                    className="bg-white rounded-xl shadow-lg p-8"
+                    className="bg-white rounded-xl shadow-lg p-8 text-gray-900"
                     style={{ borderTop: `6px solid ${theme.primaryColor}` }}
                 >
                     <h1 className="text-3xl font-bold mb-2">{form.name}</h1>
@@ -510,7 +518,7 @@ export default function FormRenderer() {
                                                                 />
                                                                 <div className="flex justify-between text-xs text-gray-400 font-medium">
                                                                     <span>{field.minLimit || 0}</span>
-                                                                    <span className="text-teal-600 font-bold">{formData[field.label] || field.minLimit || 0}</span>
+                                                                    <span className="text-teal-600 font-bold">{String(formData[field.label] || field.minLimit || 0)}</span>
                                                                     <span>{field.maxLimit || 100}</span>
                                                                 </div>
                                                             </div>

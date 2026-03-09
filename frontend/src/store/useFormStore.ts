@@ -11,6 +11,7 @@ interface FormState {
     loadForms: () => Promise<void>;
     loadFolders: () => Promise<void>;
     loadSubmissions: (formId: string) => Promise<void>;
+    loadAllSubmissions: () => Promise<void>;
     // Form actions
     addForm: (form: Omit<Form, 'id'>) => Promise<Form>;
     updateForm: (id: string, updates: Partial<Form>) => Promise<void>;
@@ -38,7 +39,8 @@ export const useFormStore = create<FormState>((set, get) => ({
         set({ loading: true });
         try {
             const forms = await api.getForms();
-            set({ forms, loading: false });
+            const trash = await api.getTrash();
+            set({ forms: [...forms, ...trash], loading: false });
         } catch (e) {
             console.error(e);
             set({ loading: false });
@@ -56,11 +58,24 @@ export const useFormStore = create<FormState>((set, get) => ({
 
     loadSubmissions: async (formId) => {
         try {
-            const submissions = await api.getSubmissions(formId);
-            set({ submissions });
+            const fresh = await api.getSubmissions(formId);
+            // Merge: replace all submissions for this formId, keep others
+            set(s => ({
+                submissions: [
+                    ...s.submissions.filter(sub => sub.formId !== formId),
+                    ...fresh,
+                ],
+            }));
         } catch (e) {
             console.error(e);
         }
+    },
+
+    loadAllSubmissions: async () => {
+        const { forms, loadSubmissions } = get();
+        // Load in parallel for all non-deleted forms
+        const activeForms = forms.filter(f => !f.isDeleted && !f.id.startsWith('local-'));
+        await Promise.allSettled(activeForms.map(f => loadSubmissions(f.id)));
     },
 
     addForm: async (form) => {

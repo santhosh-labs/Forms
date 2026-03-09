@@ -92,3 +92,13 @@ model Folder {
   owner       User?    @relation(fields: [ownerId], references: [id])
   forms       Form[]
 }
+
+// ─── Report ──────────────────────────────────────────────
+model Report {
+  id        String   @id @default(cuid())
+  name      String
+  formId    String
+  formName  String
+  type      String   @default("Summary")
+  createdAt DateTime @default(now())
+}

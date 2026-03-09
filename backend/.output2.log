@@ -1,0 +1,5 @@
+﻿
+> formflow-backend@1.0.0 dev C:\Users\Hemanth\Downloads\project-bolt-sb1-m34ekk4k\project\backend
+> nodemon --exec ts-node src/index.ts
+
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.

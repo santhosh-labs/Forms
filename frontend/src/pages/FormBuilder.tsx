@@ -42,6 +42,7 @@ export default function FormBuilder() {
   const [activeDragLabel, setActiveDragLabel] = useState<string | null>(null);
 
   const updateForm = useFormStore(state => state.updateForm);
+  const updateFormFields = useFormStore(state => state.updateFormFields);
   const form = useFormStore(state => state.forms.find(f => f.id === id));
 
   /* ── Load existing form ─────────────────────────── */
@@ -50,6 +51,10 @@ export default function FormBuilder() {
       const state = location.state as { name?: string };
       if (state?.name) setFormName(state.name);
     } else if (form) {
+      if (form.isDeleted) {
+        navigate('/');
+        return;
+      }
       setFormName(form.name);
       if (form.gridRows && form.gridRows.length > 0) {
         setGridRows(form.gridRows);
@@ -74,9 +79,9 @@ export default function FormBuilder() {
   /* ── Sync to store ─────────────────────────────── */
   useEffect(() => {
     if (id && id !== 'new') {
-      updateForm(id, { gridRows, fields: flatFields });
+      updateFormFields(id, flatFields, gridRows);
     }
-  }, [gridRows, flatFields, id, updateForm]);
+  }, [gridRows, flatFields, id, updateFormFields]);
 
   /* ── Selected field lookup ─────────────────────── */
   const selectedField = useMemo<FormField | null>(() => {
